@@ -1,0 +1,138 @@
+// @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+//
+// font
+
+/// ブラウザのデフォルトフォントサイズ<br>
+/// htmlタグのフォントサイズに影響する。<br>
+/// デフォルトで横1600pxの時に指定したサイズになり、ウィンドウサイズに応じて可変する。
+/// @group font
+$font-size-browser: 16px;
+
+/// ブラウザのデフォルトフォントサイズ (SP)<br>
+/// htmlタグにのフォントサイズに影響する。<br>
+/// デフォルトで横1600pxの時に指定したサイズになり、ウィンドウサイズに応じて可変する。
+/// @group font
+$font-size-browser-sp: 16px * 2;
+
+
+/// デフォルトの日本語フォント
+/// @group font
+$font-family-gothic-default: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN',
+  'Hiragino Sans', Meiryo, sans-serif;
+/// @group font
+$font-family-gothic-default-safari: "Hiragino Sans","Hiragino Kaku Gothic ProN",sans-serif;
+/// デフォルトの英語フォント
+/// @group font
+$font-family-mincho-default: 'Noto Sans JP', YuMincho, '游明朝', 'Times New Roman',
+  'Hiragino Mincho ProN', 'HGS明朝B', 'ＭＳ Ｐ明朝', serif;
+
+/// @group font
+$font-family-gothic: $font-family-gothic-default;
+/// @group font
+$font-family-gothic-safari: $font-family-gothic-default-safari;
+/// @group font
+$font-family-mincho: $font-family-mincho-default;
+/// @group font
+$font-family-en: 'Montserrat', $font-family-gothic-default;
+
+/// 英字フォント
+/// @group font
+@mixin font-en() {
+  font-family: $font-family-en;
+}
+
+@mixin font-en-light() {
+  font-family: $font-family-en;
+  font-weight: 300;
+}
+
+@mixin font-en-regular() {
+  font-family: $font-family-en;
+  font-weight: 400;
+}
+
+@mixin font-en-semibold() {
+  font-family: $font-family-en;
+  font-weight: 600;
+}
+
+@mixin font-en-semibold() {
+  font-family: $font-family-en;
+  font-weight: 700;
+}
+
+/// 日本語フォント
+/// @group font
+@mixin font-ja-gothic {
+  font-family: $font-family-gothic-safari;
+  .-no-safari & {
+    font-family: $font-family-gothic;
+  }
+  &.-no-safari {
+    font-family: $font-family-gothic;
+  }
+}
+
+@mixin font-ja-gothic-light {
+  font-family: $font-family-gothic-safari;
+  .-no-safari & {
+    font-family: $font-family-gothic;
+  }
+  &.-no-safari {
+    font-family: $font-family-gothic;
+  }
+  font-weight: 300;
+}
+
+@mixin font-ja-gothic-regular {
+  font-family: $font-family-gothic-safari;
+  .-no-safari & {
+    font-family: $font-family-gothic;
+  }
+  &.-no-safari {
+    font-family: $font-family-gothic;
+  }
+  font-weight: 400;
+}
+
+@mixin font-ja-gothic-medium {
+  font-family: $font-family-gothic-safari;
+  .-no-safari & {
+    font-family: $font-family-gothic;
+  }
+  &.-no-safari {
+    font-family: $font-family-gothic;
+  }
+  font-weight: 500;
+}
+
+@mixin font-ja-gothic-semibold {
+  font-family: $font-family-gothic-safari;
+  .-no-safari & {
+    font-family: $font-family-gothic;
+  }
+  &.-no-safari {
+    font-family: $font-family-gothic;
+  }
+  font-weight: 600;
+}
+
+@mixin font-ja-gothic-bold {
+  font-family: $font-family-gothic-safari;
+  .-no-safari & {
+    font-family: $font-family-gothic;
+  }
+  &.-no-safari {
+    font-family: $font-family-gothic;
+  }
+  font-weight: 700;
+}
+
+
+/// 日本語フォントbold
+/// @group font
+@mixin font-ja-mincho {
+  font-family: $font-family-mincho;
+}

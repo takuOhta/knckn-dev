@@ -1,0 +1,38 @@
+@use '/src/styles/global/config/size' as c-size;
+@use '/src/styles/global/abstracts/mixin/size' as a-size;
+
+//
+// size
+//
+
+//
+// content
+//
+
+/// @group size
+$margin-content-pc: calc((100vw - #{c-size.$width-content-pc}) / 2);
+/// @group size
+$margin-negative-content-pc: calc((100vw - #{c-size.$width-content-pc}) / 2 * -1);
+/// @group size
+$margin-content-small: 80px;
+/// @group size
+$margin-content-sp: a-size.size-variable-sp(50);
+/// @group size
+$margin-negative-content-sp: $margin-content-sp * -1;
+
+/// @group size
+$base-width-small: c-size.$width-content-pc + $margin-content-small * 2;
+
+//
+// components
+//
+
+/// @group size
+$height-header: 70px;
+/// @group size
+$height-header-sp: 80px;
+
+/// @group size
+$height-button: 80px;
+/// @group size
+$height-button-sp: a-size.size-variable-sp(120);

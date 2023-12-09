@@ -1,0 +1,108 @@
+//
+// easing
+//
+
+// ---------------------------------------------------------------------------------------------------------------------
+//
+//  Author: Scotty Vernon
+//  www: http://wildflame.co.uk/
+//  twitter: http://twitter.com/KingScooty
+//  dribbble: http://dribbble.com/KingScooty
+//
+//  Licensed under a MIT License
+//
+// ---------------------------------------------------------------------------------------------------------------------
+//  Version:
+//   1.1
+
+/// @group easing
+$easeInSine: cubic-bezier(0.47, 0, 0.745, 0.715);
+/// @group easing
+$easeOutSine: cubic-bezier(0.39, 0.575, 0.565, 1);
+/// @group easing
+$easeInOutSine: cubic-bezier(0.39, 0.575, 0.565, 1);
+
+/// @group easing
+$easeInQuad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+/// @group easing
+$easeOutQuad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+/// @group easing
+$easeInOutQuad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+/// @group easing
+$easeInCubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+/// @group easing
+$easeOutCubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+/// @group easing
+$easeInOutCubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+/// @group easing
+$easeInQuart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+/// @group easing
+$easeOutQuart: cubic-bezier(0.165, 0.84, 0.44, 1);
+/// @group easing
+$easeInOutQuart: cubic-bezier(0.165, 0.84, 0.44, 1);
+
+/// @group easing
+$easeInQuint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+/// @group easing
+$easeOutQuint: cubic-bezier(0.23, 1, 0.32, 1);
+/// @group easing
+$easeInOutQuint: cubic-bezier(0.23, 1, 0.32, 1);
+
+/// @group easing
+$easeInExpo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+/// @group easing
+$easeOutExpo: cubic-bezier(0.19, 1, 0.22, 1);
+/// @group easing
+$easeInOutExpo: cubic-bezier(0.19, 1, 0.22, 1);
+
+/// @group easing
+$easeInCirc: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+/// @group easing
+$easeOutCirc: cubic-bezier(0.075, 0.82, 0.165, 1);
+/// @group easing
+$easeInOutCirc: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+/// @group easing
+$easeInBack: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+/// @group easing
+$easeOutBack: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/// @group easing
+$easeInOutBack: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+/// @group easing
+$easeInOutFast: cubic-bezier(1, 0, 0, 1);
+
+/// @group easing
+$authenticMotion: cubic-bezier(0.4, 0, 0.2, 1);
+
+//
+// original
+//
+
+/// @group easing
+$ease: cubic-bezier(0.23, 1, 0.32, 1);
+/// @group easing
+$easing-opacity: opacity 1s $ease;
+
+/// @group easing
+@mixin easing-out($speed) {
+  transition-property: all;
+  transition-duration: $speed + s;
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/// @group easing
+@mixin easing-original($speed) {
+  transition-property: all;
+  transition-duration: $speed + s;
+  transition-timing-function: cubic-bezier(0.745, 0.065, 0.17, 1);
+}
+
+/// @group easing
+@mixin easing-original2($speed) {
+  transition-property: all;
+  transition-duration: $speed + s;
+  transition-timing-function: cubic-bezier(0.43, 0.195, 0.02, 1);
+}

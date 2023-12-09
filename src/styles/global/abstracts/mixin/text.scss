@@ -1,0 +1,25 @@
+@use "sass:math";
+
+@use '/src/styles/global/abstracts/media-query' as a-media;
+@use '/src/styles/global/abstracts/mixin/sass' as a-sass;
+@use '/src/styles/global/abstracts/font' as a-font;
+@use '/src/styles/global/config/color' as c-color;
+
+/// line-height によって発生するテキストブロックの上下片側の余白を計算
+///
+/// `@require` $font-size-browser, $font-size-base, $line-height-body-text
+///
+/// @param {Number(px)} $font-size[$font-size-browser * remove-unit($font-size-base)] - テキストのフォントサイズ (デフォルトは body のフォントサイズ)
+/// @param {Number} $line-height[$line-height-body-text] - テキストの行間サイズ
+///
+/// @return {Number(px)} 空白の数値
+///
+/// @require {function} remove-unit
+///
+/// @group text
+@function text-line-margin-half(
+  $font-size: $font-size-browser * remove-unit($font-size-base),
+  $line-height: $line-height-body-text
+) {
+  @return $font-size * math.div(($line-height - 1), 2);
+}

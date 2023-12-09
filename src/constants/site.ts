@@ -1,0 +1,5 @@
+export const SITE_URL = 'https://www.ctv.co.jp'
+export const SITE_NAME = '中京テレビ'
+export const SITE_TITLE = '中京テレビ'
+export const SITE_KEYWORD = '中京テレビ,名古屋,東海三県,ニュース,キャッチ,PS純金,大とくさん,オドぜひ,太田上田,試写会,24時間テレビ,ゴリ夢中,アナウンサー,Locipo,ロキポ,番組表'
+export const SITE_DESCRIPTION = '中京テレビ公式ウェブサイトです。番組情報や、東海三県の最新ニュース、動画（Locipo）、映画試写会、イベントなど中京テレビに関する様々な情報をお届けします。'

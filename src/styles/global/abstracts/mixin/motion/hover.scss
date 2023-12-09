@@ -1,0 +1,56 @@
+@use '/src/styles/global/abstracts/media-query' as a-media;
+@use '/src/styles/global/abstracts/mixin/easing' as a-ease;
+
+//
+// hover motion
+//
+
+/// @group motion
+@mixin hover-opacity() {
+  @include a-ease.easing-out(0.6);
+  &:hover {
+    @include a-media.media-pc {
+      opacity: 0.3;
+    }
+  }
+}
+
+@mixin hover-scale() {
+  overflow: hidden;
+  transform: rotate(0.000001deg);
+
+  > * {
+    @include a-ease.easing-out(0.6);
+    &:hover {
+      @include a-media.media-pc {
+        scale: 1.05;
+      }
+    }
+  }
+}
+
+@mixin hover-image-scale() {
+  overflow: hidden;
+  transform: rotate(0.000001deg);
+
+  .image {
+    > * {
+      @include a-ease.easing-out(0.6);
+    }
+  }
+
+  &:hover {
+    .image {
+      > * {
+        @include a-media.media-pc {
+          scale: 1.05;
+        }
+      }
+    }
+  }
+}
+
+/// @group motion
+@mixin hover-colorChange-ease() {
+  @include a-ease.easing-out(0.6);
+}

@@ -1,0 +1,16 @@
+
+@use "/src/styles/global/abstracts/mixin/layout" as a-layout;
+
+/// ライン
+///
+///
+/// @group object
+@mixin line($w: 100%, $h: 1px, $color: $color-border-black) {
+  width: $w;
+  height: $h;
+  overflow: hidden;
+  > * {
+    background-color: $color;
+    @include a-layout.full();
+  }
+}

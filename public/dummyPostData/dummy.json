@@ -1,0 +1,28 @@
+{
+	"lists": [
+		{
+			"ID": 34924,
+			"post_status": "publish",
+			"post_title": "ダミーニュース",
+			"post_date": "2023.10.16",
+			"link": "/news/34924/",
+			"pickup": "0"
+		},
+		{
+			"ID": 34797,
+			"post_status": "publish",
+			"post_title": "ダミーニュース",
+			"post_date": "2023.09.25",
+			"link": "/news/34797/",
+			"pickup": "0"
+		},
+		{
+			"ID": 34732,
+			"post_status": "publish",
+			"post_title": "ダミーニュース",
+			"post_date": "2023.09.25",
+			"link": "/news/34732/",
+			"pickup": "0"
+		}
+	]
+}

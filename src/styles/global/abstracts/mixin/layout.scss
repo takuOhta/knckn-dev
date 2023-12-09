@@ -1,0 +1,218 @@
+@use '/src/styles/global/config/size' as c-size;
+@use '/src/styles/global/abstracts/media-query' as a-media;
+@use '/src/styles/global/abstracts/mixin/size' as a-size;
+//
+// layout
+//
+
+/// 横幅と高さを100%、ブロック要素にする。
+/// @group layout
+/// @example
+/// .block{
+///   @include full();
+///  }
+@mixin full() {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/// ページコンテンツを入れるのに便利。
+/// widthをコンテンツ幅にして、左右にマージンをつけて中央寄せ。
+/// @group layout
+/// @example
+/// .outer{
+///   @include inner();
+///  }
+@mixin contentWidth() {
+  margin-left: auto;
+  margin-right: auto;
+  @include a-media.media-pc {
+    // 新規でボイラーを使ったサイトを構築する場合
+    //////////////////////////////////////////////////////////////////////////////
+    width: a-size.size-variable-pc(c-size.$width-content-pc);
+    //////////////////////////////////////////////////////////////////////////////
+
+    //既存のサイトにボイラーを使ったページを追加する場合
+    //////////////////////////////////////////////////////////////////////////////
+    // width: a-size.size-viewport-pc(c-size.$width-content-pc);
+    //////////////////////////////////////////////////////////////////////////////
+  }
+  // @include a-media.media-pc-small {
+  //   width: a-size.size-variable-pc(c-size.$width-content-pc-outer);
+  // }
+  @include a-media.media-sp {
+    // 新規でボイラーを使ったサイトを構築する場合
+    //////////////////////////////////////////////////////////////////////////////
+    width: a-size.size-variable-sp(c-size.$width-content-sp);
+    //////////////////////////////////////////////////////////////////////////////
+
+    //既存のサイトにボイラーを使ったページを追加する場合
+    //////////////////////////////////////////////////////////////////////////////
+    // width: a-size.size-viewport-sp(c-size.$width-content-sp);
+    //////////////////////////////////////////////////////////////////////////////
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@mixin contentWidthInner() {
+  margin-left: auto;
+  margin-right: auto;
+  @include a-media.media-pc {
+    width: a-size.size-variable-pc(c-size.$width-content-pc-inner);
+  }
+  @include a-media.media-sp {
+    width: a-size.size-variable-sp(c-size.$width-content-sp-inner);
+  }
+}
+
+@mixin contentWidthOuter() {
+  margin-left: auto;
+  margin-right: auto;
+  @include a-media.media-pc {
+    width: a-size.size-variable-pc(c-size.$width-content-pc-outer);
+  }
+  @include a-media.media-sp {
+    width: a-size.size-variable-sp(c-size.$width-content-sp-outer);
+  }
+}
+
+
+@mixin contentWidthOuterLeftMargin() {
+  margin-left: auto;
+  margin-right: auto;
+  @include a-media.media-pc {
+    width: a-size.size-variable-pc(c-size.$width-content-pc-outer);
+    // padding-left: a-size.size-variable-pc(230);
+    padding-left: a-size.size-variable-pc(180);
+  }
+  @include a-media.media-sp {
+    width: a-size.size-variable-sp(c-size.$width-content-sp-outer);
+    padding-left: a-size.size-variable-sp(20);
+  }
+}
+
+@mixin contentWidthOuterLeftMarginInner($paddingLeft: 260) {
+  margin-left: auto;
+  margin-right: auto;
+  @include a-media.media-pc {
+    width: 100%;
+    // padding-left: a-size.size-variable-pc(230);
+    padding-left: a-size.size-variable-pc($paddingLeft);
+  }
+  @include a-media.media-sp {
+    width: 100%;
+    padding-left: a-size.size-variable-sp(20);
+    padding-right: a-size.size-variable-sp(20);
+  }
+}
+@mixin contentWidthOuterLeftMarginInnerBody($width: c-size.$width-content-pc-inner, $widthSp: c-size.$width-content-sp-inner) {
+  @include a-media.media-pc {
+    width: a-size.size-variable-pc($width);
+  }
+  @include a-media.media-sp {
+    width: a-size.size-variable-sp($widthSp);
+  }
+}
+
+
+/// 左上の配置指定を一括で出来る。
+/// @example
+///  &:after{
+///   @include position(absolute,100%,100%);
+///  }
+/// @group layout
+@mixin position($position: absolute, $w: auto, $h: auto) {
+  width: $w;
+  height: $h;
+  position: $position;
+  left: 0;
+  top: 0;
+}
+
+/// 中央の配置指定を一括で出来る。
+/// @example
+///  &:after{
+///   @include position(absolute,100%,100%);
+///  }
+/// @group layout
+@mixin position-center($position, $w, $h) {
+  width: $w;
+  height: $h;
+  position: $position;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+}
+
+/// y軸中央の配置指定を一括で出来る。
+/// @example
+///  &:after{
+///   @include position(absolute,100%);
+///  }
+/// @group layout
+@mixin position-center-y($position, $h) {
+  height: $h;
+  position: $position;
+  bottom: 0;
+  top: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/// x軸中央の配置指定を一括で出来る。
+/// @example
+///  &:after{
+///   @include position(absolute,100%);
+///  }
+/// @group layout
+@mixin position-center-x($position, $w) {
+  width: $w;
+  position: $position;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/// flexの指定を一括で出来る。
+/// @example
+///  .container{
+///   @include flex(center,space-between,no-wrap);
+///  }
+/// @group layout
+@mixin flex($vertical: center, $side: space-between, $wrap: wrap) {
+  display: flex;
+  justify-content: $side;
+  align-items: $vertical;
+  flex-wrap: $wrap;
+}
+
+/// flex中央寄せの指定を一括で出来る。
+/// @example
+///  .container{
+///   @include flex-center();
+///  }
+/// @group layout
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/// flex→寄せの指定を一括で出来る。
+/// @example
+///  .container{
+///   @include flex-right();
+///  }
+/// @group layout
+@mixin flex-right {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: flex-start;
+}

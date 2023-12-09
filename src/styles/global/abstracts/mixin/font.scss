@@ -1,0 +1,126 @@
+@use "sass:math";
+
+@use '/src/styles/global/config/size' as c-size;
+@use '/src/styles/global/abstracts/mixin/sass' as a-sass;
+@use '/src/styles/global/abstracts/mixin/size' as a-size;
+
+//
+// font
+//
+
+///
+/// - 日本語縦書き表示
+///
+/// @group font
+@mixin font-vertical() {
+  -webkit-writing-mode: vertical-rl;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+  font-feature-settings: normal; // 縦書きのときは文字詰しない
+  text-orientation: upright;
+
+  * {
+    font-feature-settings: normal;
+  } // 縦書きのときは文字詰しない
+}
+
+///
+/// - 英語語縦書き表示
+///
+/// @group font
+@mixin font-vertical-en() {
+  -webkit-writing-mode: vertical-rl;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+  font-feature-settings: normal; // 縦書きのときは文字詰しない
+  * {
+    font-feature-settings: normal;
+  } // 縦書きのときは文字詰しない
+}
+
+///
+/// @param {Number} $value - PSDのトラッキングの数値
+/// PSDのトラッキングの数値変換用
+/// @group font
+@mixin tracking($value) {
+  letter-spacing: math.div($value,1000) + em;
+}
+
+///
+/// @param {Number} $value - PSDのトラッキングの数値
+/// font-feature-settings: 'palt' を指定してる場合のletter-spacing
+/// PSDでプロポーショナルメトリクスを指定している場合は trackingの方を使用👆
+/// * 2 はフォントファミリーによって要調整
+///
+/// @group font
+@mixin tracking-palt($value) {
+  letter-spacing: math.div($value,1000 * 2) + em;
+}
+
+///
+/// @param {Number} $font-size - 要素のフォントサイズ
+/// @param {Number} $value - PSDの段落の数値
+///
+/// @group font
+@mixin lineHeight($font-size, $value) {
+  line-height: math.div($value,$font-size);
+}
+
+/// ウィンドウ幅によって可変になるフォントサイズ（最小・最大値込み）
+/// @param {Number(any)} $font-size[14px] - デザイン上のフォントサイズ(px)
+/// @param {Number(any)} $min[$font-size * math.div($base-width-min,$base-width-pc)] - 最小値(px)
+/// @example
+/// .selector {
+///   @include font-size-variable-pc(20px);
+///   @include font-size-variable-pc(20px, 12px);
+/// }
+/// @group font
+@mixin font-size-variable-pc($font-size, $min: 0) {
+  $font-size: if($font-size, $font-size, $font-size-base-px);
+  $min: if(
+    $min > 0,
+    $min,
+    if(
+      a-sass.remove-unit($font-size * math.div(c-size.$base-width-min,c-size.$base-width-pc)) < 10,
+      10px,
+      0
+    )
+  );
+
+  font-size: a-size.size-variable-pc($font-size);
+
+  @if $min > 0 {
+    @media screen and (max-width: math.div(c-size.$base-width-pc * a-sass.remove-unit($min),a-sass.remove-unit($font-size))) {
+      font-size: a-sass.remove-unit($min) * 1px;
+    }
+  }
+}
+
+/// ウィンドウ幅によって可変になるフォントサイズ（最小・最大値込み） (SP)
+/// @param {Number(any)} $font-size[13px * 2] - デザイン上のフォントサイズ(px)
+/// @param {Number(any)} $min[$font-size * math.div($base-width-min-sp,$base-width-sp)] - 最小値(px)
+/// @example
+/// .selector {
+///   @include font-size-variable-sp(30px);
+///   @include font-size-variable-sp(30px, 12px);
+/// }
+/// @group font
+@mixin font-size-variable-sp($font-size: $font-size-base-px-sp, $min: 0) {
+  $min: if(
+    $min > 0,
+    $min,
+    if(
+      a-sass.remove-unit($font-size * math.div(c-size.$base-width-min-sp,c-size.$base-width-sp)) < 20,
+      20px,
+      0
+    )
+  );
+
+  font-size: a-size.size-variable-sp($font-size);
+
+  @if $min > 0 {
+    @media screen and (max-width: a-size.sp-px(math.div(c-size.$base-width-sp * a-sass.remove-unit($min),a-sass.remove-unit($font-size)))) {
+      font-size: a-size.sp-px($min);
+    }
+  }
+}

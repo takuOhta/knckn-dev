@@ -1,0 +1,118 @@
+// @import 'size';
+@use '/src/styles/global/config/breakpoint.scss' as c-break;
+@use '/src/styles/global/config/size.scss' as c-size;
+@use '/src/styles/global/abstracts/size.scss' as a-size;
+
+
+//
+// media query （サイト特有の変数が必要）
+//
+
+
+$media-sp: 'screen and (max-width:#{c-break.$breakpoint - 1px})';
+$media-tb: 'screen and (min-width: #{c-break.$breakpoint}) and (max-width: #{c-break.$breakpoint-tb-pc - 1px})';
+$media-pc: 'screen and (min-width: #{c-break.$breakpoint})';
+$media-pc-large: 'only screen and (min-width: #{c-size.$base-width-max})';
+$media-pc-max: 'screen and (min-width: #{c-size.$base-width-max})';
+$media-pc-small: 'only screen and (min-width: #{c-break.$breakpoint}) and (max-width: #{a-size.$base-width-small - 1px})';
+
+
+/// SPサイズ用のメディアクエリ<br>
+/// ブレークポイントは/src/styles/global/config/breakpointで指定(デフォルト ~768px)
+/// @group media query
+/// @see $breakpoint
+/// @example
+/// .sp {
+///   display: none;
+///
+///   @include media-sp {
+///     display: block;
+///   }
+/// }
+///
+
+@mixin media-sp {
+  .-ua-tablet & {
+    @content;
+  }
+
+  @media #{$media-sp} {
+    @content;
+  }
+}
+
+/// タブレットサイズ用のメディアクエリ<br>
+/// ブレークポイントは/src/styles/global/config/breakpointで指定(デフォルト 768px ~ 1080px)
+/// @group media query
+/// @see $breakpoint
+/// @see $breakpoint-tb-pc
+/// @example
+/// .tb {
+///   display: none;
+///
+///   @include media-tb {
+///     display: block;
+///   }
+/// }
+///
+@mixin media-tb {
+  @media #{$media-tb} {
+    @content;
+  }
+}
+
+/// PCサイズ用のメディアクエリ<br>
+/// ブレークポイントは/src/styles/global/config/breakpointで指定(デフォルト 768px ~)
+/// @group media query
+/// @see $breakpoint
+/// @example
+/// .pc {
+///   display: none;
+///
+///   @include media-pc {
+///     display: block;
+///   }
+/// }
+@mixin media-pc {
+  @media #{$media-pc} {
+    @content;
+  }
+}
+
+
+/// PCサイズ用のメディアクエリ<br>
+/// リサイズで拡大される最大サイズ($base-width-max : 1920px)を超えたときに適用されるメディアクエリ。
+/// @group media query
+/// @see $base-width-max
+/// @example
+/// .pc-large {
+///   display: none;
+///
+///   @include media--pc-large {
+///     display: block;
+///   }
+/// }
+@mixin media-pc-large {
+  @media #{$media-pc-large} {
+    @content;
+  }
+}
+
+/// PCサイズ用のメディアクエリ<br>
+/// リサイズで拡大される最大サイズ($base-width-max : 1920px)を超えたときに適用されるメディアクエリ。
+/// @group media query
+@mixin media-pc-max {
+  @media #{$media-pc-max} {
+    @content;
+  }
+}
+
+/// PCサイズ用のメディアクエリ<br>
+/// SPサイズブレークポイント(デフォルト 768px ~) ～ コンテンツ幅+若干のマージン(1120px + 80px *2)を下回る範囲で適用されるメディアクエリ。
+/// @group media query
+@mixin media-pc-small {
+  @media #{$media-pc-small} {
+    @content;
+  }
+}
+

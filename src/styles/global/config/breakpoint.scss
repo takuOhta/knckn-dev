@@ -1,0 +1,14 @@
+@use "size";
+
+//
+// breakpoint
+//
+
+/// SP | TB
+/// @group media query
+$breakpoint: 768px;
+/// TB | PC
+/// @group media query
+/// @see $base-width-min
+$breakpoint-tb-pc: size.$base-width-min;
+

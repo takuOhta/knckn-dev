@@ -1,0 +1,31 @@
+//
+// color
+//
+
+/// 基本の色
+/// @group color
+$color-primary: #111;
+/// @group color
+$color-secondary: #666;
+/// @group color
+$color-attention: #E11955;
+/// @group color
+$color-white: #fff;
+/// @group color
+$color-white-transparent: rgba($color-white, 0.3);
+
+// 背景色
+/// @group color
+$color-bg-body: $color-white;
+/// @group color
+$color-bg-dark: $color-secondary;
+
+// 罫線の色
+/// @group color
+$color-border-black: $color-primary;
+
+/// フォントの色
+/// @group color
+$color-font-black: $color-primary;
+/// @group color
+$color-font-white: $color-white;

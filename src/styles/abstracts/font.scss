@@ -1,0 +1,35 @@
+@use "sass:math";
+//
+// font
+//
+
+/// ブラウザのデフォルトフォントサイズ
+/// @group font
+$font-size-browser: 16px;
+/// ブラウザのデフォルトフォントサイズ (SP)
+/// @group font
+$font-size-browser-sp: 16px * 2;
+
+/// @group font
+$font-size-html-px: $font-size-browser;
+/// @group font
+$font-size-html-px-sp: $font-size-browser-sp;
+/// @group font
+$font-size-html-default: math.div($font-size-html-px,$font-size-browser) * 100%;
+/// @group font
+$font-size-html-sp-default: math.div($font-size-html-px-sp,$font-size-browser-sp) * 100%;
+
+/// @group font
+$font-size-html: $font-size-html-default;
+/// @group font
+$font-size-html-sp: $font-size-html-sp-default;
+/// @group font
+$font-size-base-px: 14px;
+/// @group font
+$font-size-base: math.div($font-size-base-px,$font-size-html-px) * 1rem;
+/// @group font
+$font-size-base-px-sp: 13px * 2;
+/// @group font
+$font-size-base-sp: math.div($font-size-base-px-sp,$font-size-html-px-sp) * 1rem;
+
+

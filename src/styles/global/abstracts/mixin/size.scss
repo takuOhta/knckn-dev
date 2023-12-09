@@ -1,0 +1,181 @@
+@use 'sass';
+@use "sass:math";
+@use '/src/styles/global/abstracts/font' as a-font;
+@use '/src/styles/global/config/size' as c-size;
+
+//
+// size
+//
+/// <p>htmlタグのフォントサイズを基準とした相対的なサイズ</p>
+/// <p>htmlのフォントサイズの記述はsrc\_assets\css\foundation\base.scssを参照。<br>
+/// リサイズ時の仕様が定められているので、作業前に確認してください。</p>
+///
+/// <p>デフォルトの仕様は以下<br>
+/// ・~768pxはウィンドウサイズによって縮小される<br>
+/// ・768px ~ 1080pxは 1080px時のサイズで固定される。<br>
+/// ・1080px ~ 1920pxはウィンドウサイズによって拡縮される。(基準は$base-width-pc (1600px))<br>
+/// ・1920px ~ は1920px時のサイズで固定される。<br></p>
+/// <p>breakpointはsrc\_assets\css\global\config\breakpoint.scssで定められているので必要に応じて変更してください。</p>
+///  PCサイズ(768px~)の指定はsize-variable-pc()<br>
+///  SPサイズ(~767px)の指定はsize-variable-sp()で行います。
+/// @param {Number(px)} $size - デザイン上のpx値サイズ
+/// @return {Number(rem)} - htmlタグのフォントサイズを基準とした相対的なサイズ
+/// @group size
+/// @see $breakpoint
+/// @see $breakpoint-tb-pc
+
+@function size-variable-pc($size) {
+  @return math.div(sass.remove-unit($size),sass.remove-unit(a-font.$font-size-html-px)) * 1rem;
+}
+@function size-variable-pc-large($size) {
+  @return sass.remove-unit($size) * 1.2px;
+}
+@function size-variable-pc-small($size) {
+  @return sass.remove-unit($size) * 0.8px;
+}
+
+/// htmlタグのフォントサイズを基準とした相対的なサイズ (SP)
+///
+/// @param {Number(px)} $size - デザイン上のpx値サイズ
+/// @return {Number(rem)} - htmlタグのフォントサイズを基準とした相対的なサイズ
+/// @group size
+@function size-variable-sp($size) {
+  @return math.div(sass.remove-unit($size),sass.remove-unit(a-font.$font-size-html-px-sp)) * 1rem;
+}
+
+/// ウィンドウ幅に応じた可変サイズ (PC)
+/// $base-width-pc()（デフォルトで1600px）を基準にウィンドウ幅によって拡縮する。<br>
+/// vwの指定をデザイン上のpxサイズで指定できる感じ。<br>
+/// 基本は$size-variable-pcを使って、常にウィンドウ幅で制御したいときにこっちを使う。<br>
+/// @param {Number(px)} $size - デザイン上のpx値サイズ
+/// @return {Number(rem)} - ウィンドウ幅に応じた可変サイズ
+/// @group size
+/// @see $base-width-pc
+@function size-viewport-pc($size) {
+  @return math.div(sass.remove-unit($size),sass.remove-unit(c-size.$base-width-pc)) * 100vw;
+}
+
+/// ウィンドウ幅に応じた可変サイズ (SP)
+///
+/// @param {Number(px)} $size - デザイン上のpx値サイズ
+/// @return {Number(rem)} - ウィンドウ幅に応じた可変サイズ
+/// @group size
+@function size-viewport-sp($size) {
+  @return math.div(sass.remove-unit($size),sass.remove-unit(c-size.$base-width-sp)) * 100vw;
+}
+
+/// SPサイズのウィンドウ幅に応じた可変サイズ
+/// 細かい仕様はsize-viewport-pcを参照
+/// @param {Number(any)} $number - 指定サイズ
+/// @group size
+@function pc-window-w-ratio($val) {
+  @return math.div(sass.remove-unit($val),sass.remove-unit(c-size.$base-width-pc)) * 100vw;
+}
+
+/// 基本の高さ $base-height (デフォルト900px)に応じて高さで拡縮する。
+/// @param {Number(any)} $number - 指定サイズ
+/// @group size
+/// @see $base-height
+/// @example .card{ height : pc-window-h-ratio(250);}
+@function pc-window-h-ratio($val) {
+  @return math.div(sass.remove-unit($val),sass.remove-unit(c-size.$base-height)) * 100vh;
+}
+
+/// PC横幅最小サイズ $base-width-min (デフォルト1080px)に応じて横幅で拡縮する。
+/// @param {Number(any)} $number - 指定サイズ
+/// @group size
+/// @see $base-width-min
+/// @example .card{ width : pc-window-w-ratio-min(250);}
+@function pc-window-w-ratio-min($val) {
+  @return math.div(sass.remove-unit($val),sass.remove-unit(c-size.$base-width-min)) * 100vw;
+}
+
+/// 高さ最小サイズ $base-height-min (デフォルト600px)に応じて高さで拡縮する。
+/// @param {Number(any)} $number - 指定サイズ
+/// @group size
+/// @see $base-height-min
+/// @example .card{ width : pc-window-h-ratio-min(250);}
+@function pc-window-h-ratio-min($val) {
+  @return math.div(sass.remove-unit($val),sass.remove-unit(c-size.$base-height-min)) * 100vh;
+}
+
+/// 横幅SPサイズ $base-width-sp (デフォルト600px)に応じて横幅で拡縮する。
+/// @param {Number(any)} $number - 指定サイズ
+/// @group size
+/// @see $base-width-sp
+@function sp-window-w-ratio($val) {
+  @return math.div(sass.remove-unit($val),sass.remove-unit(c-size.$base-width-sp)) * 100vw;
+}
+
+/// 高さSPサイズ $base-height-sp (デフォルト1400px)に応じて高さで拡縮する。
+/// @param {Number(any)} $number - 指定サイズ
+/// @group size
+/// @see $base-height-sp
+@function sp-window-h-ratio($val) {
+  @return math.div(sass.remove-unit($val),sass.remove-unit(c-size.$base-height-sp)) * 100vh;
+}
+
+/// 高さモーダルサイズ $base-height-modal-sp (デフォルト1208px)に応じて高さで拡縮する。
+/// @param {Number(any)} $number - 指定サイズ
+/// @group size
+@function sp-window-h-ratio-modal($val) {
+  @return math.div(sass.remove-unit($val),sass.remove-unit(c-size.$base-height-modal-sp)) * 100vh;
+}
+
+/// $base-width-sp-land (デフォルト1334px)に応じて高さで拡縮する。
+/// @param {Number(any)} $number - 指定サイズ
+/// @group size
+@function sp-land-window-w-ratio($val) {
+  @return math.div(sass.remove-unit($val),sass.remove-unit(c-size.$base-width-sp-land)) * 100vw;
+}
+
+/// $base-height-sp-land (デフォルト828px)に応じて高さで拡縮する。
+/// @param {Number(any)} $number - 指定サイズ
+/// @group size
+@function sp-land-window-h-ratio($val) {
+  @return math.div(sass.remove-unit($val),sass.remove-unit(c-size.$base-height-sp-land)) * 100vw;
+}
+
+
+/// htmlタグのフォントサイズを基準とした相対的なサイズ
+/// （html タグのフォントサイズがウィンドウ幅に応じて可変の場合のみ、この値も可変となる）
+/// ※既存サイトに追加コンテンツやページを作成する際など、ベースのフォントサイズが絶対値の場合に使用してください
+///
+/// @param {Number(px)} $size - デザイン上のpx値サイズ
+/// @return {Number(rem)} - htmlタグのフォントサイズを基準とした相対的なサイズ
+@function size-variable-pc-small($size) {
+  @return math.div(sass.remove-unit($size),sass.remove-unit(c-size.$base-width-min)) * 100vw;
+}
+
+/// 指定した値が1.2倍のpxになる
+/// @param {Number(any)} $number - 指定サイズ
+/// ウィンドウ幅に応じた可変サイズ (PC)
+///
+/// @param {Number(px)} $size - デザイン上のpx値サイズ
+/// @return {Number(rem)} - ウィンドウ幅に応じた可変サイズ
+/// @group size
+
+@function pc-window-w-ratio-large($val) {
+  @return sass.remove-unit($val) * 1.2px;
+}
+@function size-viewport-pc-large($size) {
+  @return math.div(sass.remove-unit($size),sass.remove-unit(c-size.$base-width-pc)) * 1.2px;
+}
+@function size-viewport-pc-small($size) {
+  @return math.div(sass.remove-unit($size),sass.remove-unit(c-size.$base-width-pc)) * 0.8px;
+}
+
+
+/// 指定した値が0.8倍のpxになる
+/// @param {Number(any)} $number - 指定サイズ
+/// @group size
+@function pc-window-w-ratio-small($val) {
+  @return sass.remove-unit($val) * 0.8px;
+}
+
+/// 指定した値が0.5倍のpxになる
+/// @param {Number(any)} $number - 指定サイズ
+/// @group size
+@function sp-px($val) {
+  @return math.div(sass.remove-unit($val),2) * 1px;
+}

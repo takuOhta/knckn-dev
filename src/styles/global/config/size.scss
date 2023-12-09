@@ -1,0 +1,72 @@
+//
+// size （デザインデータのサイズ）
+//
+
+//
+// baseのウィンドウサイズ
+//
+
+/// PCサイズで基準となるコンテンツ幅
+/// @group size
+$base-width-pc: 1600px;
+/// PCサイズで基準となる高さ
+/// @group size
+$base-height: 900px;
+
+/// PCサイズで基準と同じ見え方を担保する最大幅。
+/// このサイズまでは基準サイズから拡大される。
+/// @group size
+$base-width-max: 1920px;
+
+/// PCサイズで基準と同じ見え方を担保する最小幅。
+/// このサイズまでは基準サイズから縮小される。
+/// @group size
+$base-width-min: 1080px;
+
+/// PCサイズで基準と同じ見え方を担保する最小の高さ。
+/// このサイズまでは基準サイズから縮小される。
+/// pc-window-h-ratio-min()で使用。
+/// @group size
+$base-height-min: 600px;
+
+/// SPサイズで基準となるコンテンツ幅
+/// @group size
+$base-width-sp: 375px;
+
+
+/// SPサイズで基準となる高さ
+/// @group size
+$base-height-sp: 812px;
+/// SPサイズで基準となる横幅
+
+/// SPサイズで基準となる横幅
+/// @group size
+$base-width-min-sp: 320px;
+/// @group size
+$base-height-modal-sp: 604px;
+/// @group size
+
+/// SPサイズで横画面の時に基準となる幅
+$base-width-sp-land: 812px;
+
+/// SPサイズで横画面の時に基準となる高さ
+/// @group size
+$base-height-sp-land: 314px;
+
+
+
+/// PCサイズのコンテンツ幅
+/// @group size
+$width-content-pc-inner: 1210px;
+/// @group size
+$width-content-pc: 1340px;
+/// @group size
+$width-content-pc-outer: 1440px;
+
+/// SPサイズのコンテンツ幅
+/// @group size
+$width-content-sp: 312px;
+/// @group size
+$width-content-sp-outer: 335px;
+/// @group size
+$width-content-sp-inner: 335px;

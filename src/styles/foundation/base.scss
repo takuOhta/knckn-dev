@@ -1,0 +1,95 @@
+@use "sass:math";
+
+@use '/src/styles/global' as g;
+html {
+  overflow-y: scroll;
+
+  // 新規でボイラーを使ったサイトを構築する場合
+  //////////////////////////////////////////////////////////////////////////////
+  font-size: g.size-viewport-pc(g.$font-size-browser);
+
+  @include g.media-pc  {
+    font-size: g.size-viewport-pc(g.$font-size-browser);
+  }
+
+  // 768px以上1080px以下では可変サイズではなく固定にする
+  @media screen and (min-width: #{g.$breakpoint}) and (max-width: #{g.$breakpoint-tb-pc}) {
+    font-size: math.div(g.$font-size-browser * g.$base-width-min,g.$base-width-pc);
+  }
+
+  // 1920px以上では可変サイズではなく固定にする
+  @include g.media-pc-max {
+    font-size: g.$font-size-browser * math.div(g.$base-width-max,g.$base-width-pc);
+  }
+
+  @include g.media-sp {
+    font-size: g.size-viewport-sp(g.$font-size-browser-sp);
+  }
+
+  &.-ua-tablet {
+    font-size: 32px;
+  }
+  @include g.media-tb {
+    font-size: 32px;
+  }
+  //////////////////////////////////////////////////////////////////////////////
+
+
+  // 既存のサイトにボイラーを使ったページを追加する場合
+  //////////////////////////////////////////////////////////////////////////////
+  // $font-size-browserを既存サイトと同じフォントサイズに変更してください
+
+  // font-size: g.$font-size-browser;
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  &.-full {
+    overflow: hidden;
+    height: 100%;
+  }
+}
+
+body {
+  @include g.font-ja-gothic();
+  color: g.$color-font-black;
+  background-color: g.$color-bg-body;
+  font-feature-settings: 'palt';
+  @include g.media-pc {
+    font-size: g.size-variable-pc(g.$font-size-base-px);
+  }
+  @include g.media-sp {
+    font-size: g.size-variable-sp(g.$font-size-base-px-sp);
+  }
+
+  html.-full & {
+    height: 100%;
+  }
+}
+
+//
+// helpers
+//
+
+.-media-pc {
+  @include g.media-sp {
+    display: none !important;
+  }
+}
+
+.-media-sp {
+  @include g.media-pc {
+    display: none !important;
+  }
+}
+
+._svgText {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+._hidden-image {
+  display: none !important;
+}

@@ -1,0 +1,18 @@
+@use "sass:math";
+
+@use '/src/styles/global/config/font' as c-font;
+//
+// font
+//
+
+$font-size-html-px: c-font.$font-size-browser;
+$font-size-html-px-sp: c-font.$font-size-browser-sp;
+$font-size-html-default: math.div($font-size-html-px,c-font.$font-size-browser) * 100%;
+$font-size-html-sp-default: $font-size-html-default;
+
+$font-size-html: $font-size-html-default;
+$font-size-html-sp: $font-size-html-sp-default;
+$font-size-base-px: 14px;
+$font-size-base: math.div($font-size-base-px,$font-size-html-px) * 1rem;
+$font-size-base-px-sp: 13px * 2;
+$font-size-base-sp: math.div($font-size-base-px-sp,$font-size-html-px-sp) * 1rem;

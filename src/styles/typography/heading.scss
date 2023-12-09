@@ -1,0 +1,118 @@
+@use "sass:math";
+@use '/src/styles/global' as g;
+
+//
+// 英語見出し
+//
+
+@mixin typo-heading-1-en() {
+  @include g.font-en-semibold();
+
+  @include g.media-pc {
+    @include g.font-size-variable-pc(56);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include g.media-sp {
+    @include g.font-size-variable-sp(32);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}
+
+@mixin typo-heading-2-en() {
+  @include g.font-en-semibold();
+
+  @include g.media-pc {
+    @include g.font-size-variable-pc(40);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include g.media-sp {
+    @include g.font-size-variable-pc(24);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}
+
+@mixin typo-heading-3-en() {
+  @include g.font-en-semibold();
+
+  @include g.media-pc {
+    @include g.font-size-variable-pc(24);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include g.media-sp {
+    @include g.font-size-variable-sp(20);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}
+
+//
+// 日本語見出し
+//
+
+@mixin typo-heading-1-ja() {
+  @include g.font-ja-semibold();
+
+  @include g.media-pc {
+    @include g.font-size-variable-pc(56);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include g.media-sp {
+    @include g.font-size-variable-sp(32);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}
+
+@mixin typo-heading-2-ja() {
+  @include g.font-ja-semibold();
+
+  @include g.media-pc {
+    @include g.font-size-variable-pc(40);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include g.media-sp {
+    @include g.font-size-variable-pc(24);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}
+
+@mixin typo-heading-3-ja() {
+  @include g.font-ja-semibold();
+
+  @include g.media-pc {
+    @include g.font-size-variable-pc(24);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include g.media-sp {
+    @include g.font-size-variable-sp(20);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}

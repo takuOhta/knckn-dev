@@ -1,0 +1,133 @@
+@use "sass:math";
+@use '/src/styles/global' as g;
+
+//
+// 本文用
+//
+
+@mixin typo-reading-large-bold() {
+  @include g.font-ja-semibold();
+
+  @include media-pc {
+    @include g.font-size-variable-pc(20);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include media-sp {
+    @include g.font-size-variable-sp(20);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}
+
+@mixin typo-reading-large() {
+  @include g.font-ja-regular();
+
+  @include media-pc {
+    @include g.font-size-variable-pc(20);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include media-sp {
+    @include g.font-size-variable-sp(20);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}
+
+
+@mixin typo-reading-medium-bold() {
+  @include g.font-ja-semibold();
+
+  @include media-pc {
+    @include g.font-size-variable-pc(16);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include media-sp {
+    @include g.font-size-variable-sp(16);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}
+
+@mixin typo-reading-medium() {
+  @include g.font-ja-regular();
+
+  @include media-pc {
+    @include g.font-size-variable-pc(16);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include media-sp {
+    @include g.font-size-variable-sp(16);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}
+
+@mixin typo-reading-regular() {
+  @include g.font-ja-regular();
+
+  @include media-pc {
+    @include g.font-size-variable-pc(14);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include media-sp {
+    @include g.font-size-variable-sp(14);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}
+
+@mixin typo-reading-small() {
+  @include g.font-ja-regular();
+
+  @include media-pc {
+    @include g.font-size-variable-pc(13);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include media-sp {
+    @include g.font-size-variable-sp(13);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}
+
+@mixin typo-reading-micro() {
+  @include g.font-ja-regular();
+
+  @include media-pc {
+    @include g.font-size-variable-pc(10);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+
+  @include media-sp {
+    @include g.font-size-variable-sp(10);
+    @include g.tracking(4);
+
+    line-height: 1.3;
+  }
+}

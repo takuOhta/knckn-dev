@@ -1,0 +1,12 @@
+/// 値の単位を除外する
+///
+/// @param {Number(any)} $w - 横幅
+/// @param {Number(any)} $h - 高さ
+///
+///
+/// @group object
+@mixin circle($w: 100%, $h: 100%) {
+  width: $w;
+  height: $h;
+  border-radius: 50%;
+}

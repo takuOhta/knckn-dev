@@ -1,0 +1,26 @@
+{
+  "search.useGlobalIgnoreFiles": false,
+  "search.useIgnoreFiles": false,
+  "search.useParentIgnoreFiles": false,
+  "html.format.enable": false,  // アストロ用にHTMLのフォーマッターを無効化(https://code.visualstudio.com/docs/editor/codebasics#_formatting)
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  // eslintの設定
+  "editor.codeActionsOnSave": {
+    "source.fixAll": false,
+    "source.fixAll.eslint": true,
+  },
+  "eslint.lintTask.options": "../.eslintrc.js",
+  "eslint.validate": [
+    "javascript",
+    "astro",
+    "typescript",
+    "vue",
+  ],
+  //stylelintの設定
+  "stylelint.validate": [
+    "html",
+    "vue",
+    "astro",
+  ],
+}
