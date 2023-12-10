@@ -1,0 +1,90 @@
+---
+
+---
+<div class="canvas-wrapper" data-gl-canvas="wrapper"></div>
+<style lang="scss" is:global>
+  .canvas-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+  }
+  [data-gl-canvas] {
+    
+  }
+</style>
+<script>
+  import { BaseWebGLCanvas } from "@scripts/components/BaseWebGLCanvas"
+  import { Program, Mesh } from "ogl";
+  import { Plane, Sphere, Box } from "ogl";
+
+  const vertex = /* glsl */ `
+	precision highp float;
+	precision highp int;
+
+	attribute vec3 position;
+	attribute vec3 normal;
+
+	uniform mat4 modelViewMatrix;
+	uniform mat4 projectionMatrix;
+	uniform mat3 normalMatrix;
+
+	varying vec3 vNormal;
+
+	void main() {
+		vNormal = normalize(normalMatrix * normal);
+		gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+	}
+`;
+
+  const fragment = /* glsl */ `
+	precision highp float;
+	precision highp int;
+
+	varying vec3 vNormal;
+
+	void main() {
+		vec3 normal = normalize(vNormal);
+		float lighting = dot(normal, normalize(vec3(-0.3, 0.8, 0.6)));
+		gl_FragColor.rgb = vec3(0.2, 0.8, 1.0) + lighting * 0.1;
+		gl_FragColor.a = 1.0;
+	}
+`;
+
+  {
+    const containerElement = document.querySelector<HTMLElement>('[data-gl-canvas="wrapper"]')
+    const webglCanvas = new BaseWebGLCanvas({element: containerElement})
+    
+    const planeGeometry = new Plane(webglCanvas.gl);
+    const sphereGeometry = new Sphere(webglCanvas.gl);
+    const cubeGeometry = new Box(webglCanvas.gl);
+
+    const program = new Program(webglCanvas.gl, {
+      vertex,
+      fragment,
+      // Don't cull faces so that plane is double sided - default is gl.BACK
+      cullFace: null,
+    });
+
+    const plane = new Mesh(webglCanvas.gl, { geometry: planeGeometry, program });
+    plane.position.set(0, 1.3, 0);
+    plane.setParent(webglCanvas.scene);
+
+    const sphere = new Mesh(webglCanvas.gl, { geometry: sphereGeometry, program });
+    sphere.setParent(webglCanvas.scene);
+
+    const cube = new Mesh(webglCanvas.gl, { geometry: cubeGeometry, program });
+    cube.position.set(0, -1.3, 0);
+    cube.setParent(webglCanvas.scene);
+
+    webglCanvas.addOnUpdate(
+      () => {
+        // console.log('addOnUpdate')
+        plane.rotation.y -= 0.02;
+        sphere.rotation.y -= 0.03;
+        cube.rotation.y -= 0.04;
+      }
+    )
+  }
+</script>

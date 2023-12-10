@@ -39,6 +39,6 @@
     ],
     "jsx": "preserve"
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.astro"],
+  "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.astro", "src/config/ogl-typescript.js"],
   "importsNotUsedAsValues": "error"
 }

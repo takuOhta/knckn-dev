@@ -7,14 +7,12 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:astro/recommended',
-    'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:storybook/recommended',
   ],
-  plugins: ['astro', 'vue', '@typescript-eslint', 'storybook'],
+  plugins: ['astro', '@typescript-eslint'],
   overrides: [
     {
-      files: ['*.vue', '*.ts'],
+      files: ['*.ts'],
       parserOptions: {
         parser: '@typescript-eslint/parser',
         ecmaVersion: 'latest',
@@ -30,16 +28,6 @@ module.exports = {
         'comma-dangle': ['error', 'always-multiline'],
         'template-curly-spacing': ['error', 'always'],
         'vue/script-indent': ['error', 2, {baseIndent: 0}],
-      },
-    },
-    {
-      // or whatever matches stories specified in .storybook/main.js
-      files: ['*.stories.@(ts|tsx|js|jsx|mjs|cjs)'],
-      rules: {
-        // example of overriding a rule
-        // 'storybook/hierarchy-separator': 'error',
-        // example of disabling a rule
-        // 'storybook/default-exports': 'off',
       },
     },
     {

@@ -1,6 +1,5 @@
 import {defineConfig, sharpImageService} from "astro/config";
 import {SITE_URL} from "./src/constants/site";
-
 import vue from "@astrojs/vue";
 
 // https://astro.build/config

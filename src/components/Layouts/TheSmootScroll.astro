@@ -1,0 +1,15 @@
+---
+
+---
+
+<div data-smooth-scroll="wrap">
+  <slot />
+</div>
+
+<style lang="scss" is:global></style>
+<script>
+  import { smoothScroll } from "@scripts/SmoothScroll/SmoothScroll";
+  smoothScroll.init(
+    document.querySelector<HTMLElement>('[data-smooth-scroll="wrap"]')
+  );
+</script>

@@ -17,36 +17,25 @@ import Layout from "@layouts/Layout.astro";
 /**
  * components
  */
-import Breadcrumbs from '@components/Parts/Schemas/Breadcrumbs.vue'
-import ButtonBox from '@components/Parts/Buttons/ButtonBox.vue'
-import HeadingPage from '@components/Parts/Headings/HeadingPage.vue'
-import IndexSectionKv from '@components/Pages/index/IndexSectionKv.vue'
-
+import Canvas from "@components/Parts/WebGL/Canvas.astro";
 /**
  * variables
  */
 const PAGE_ID = PAGE.INDEX.ID;
 const PAGE_CLASSNAME = PAGE.INDEX.CLASSNAME;
-const SITE_NAME = import.meta.env.PUBLIC_SITE_NAME ? import.meta.env.PUBLIC_SITE_NAME : "環境変数が設定されていません";
-
+const SITE_NAME = import.meta.env.PUBLIC_SITE_NAME
+  ? import.meta.env.PUBLIC_SITE_NAME
+  : "環境変数が設定されていません";
 ---
 
 <Layout title="Welcome to Astro." description="" keywords="">
-  <Breadcrumbs id={ PAGE_ID } />
-  <main class={`p-${ PAGE_CLASSNAME }`}>
-    <HeadingPage label={`${ SITE_NAME } INDEX`} />
-    <IndexSectionKv />
-  </main>
-  <div class={`p-${ PAGE_CLASSNAME }-body`}>
-    <ButtonBox label="Button" client:load />
-    <ButtonBox label="Button" />
-  </div>
+  <Canvas />
+  <main class={`p-${PAGE_CLASSNAME}`}></main>
 </Layout>
 
 <style lang="scss" is:global>
-  $PAGE_CLASSNAME: 'index';
+  $PAGE_CLASSNAME: "index";
   .p-#{$PAGE_CLASSNAME} {
-    height: 400vh;
   }
 
   .p-#{$PAGE_CLASSNAME}-body {

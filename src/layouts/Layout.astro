@@ -2,7 +2,7 @@
 /**
  * astro
  */
-import { ViewTransitions, fade } from 'astro:transitions'
+import { ViewTransitions, fade } from "astro:transitions";
 
 /**
  * constants
@@ -13,68 +13,41 @@ import {
   SITE_TITLE,
   SITE_KEYWORD,
   SITE_DESCRIPTION,
-} from '@constants/site'
+} from "@constants/site";
 
 /**
  * components
  */
-import TheHeader from '@components/Layouts/TheHeader.vue'
-import TheSmoothScroll from '@components/Layouts/TheSmoothScroll.vue'
+import TheSmoothScroll from "@components/Layouts/TheSmootScroll.astro";
 
 /**
  * Props
  */
 interface Props {
-  title: string
-  description: string
-  keywords: string
+  title: string;
+  description: string;
+  keywords: string;
 }
 
-const { title, description, keywords } = Astro.props
+const { title, description, keywords } = Astro.props;
 ---
 
 <!doctype html>
-<html
-  lang="en"
-  transition:animate="none"
->
+<html lang="en" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <title>{title || SITE_TITLE}</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1"
-    />
-    <meta
-      name="og:locale"
-      content="ja_JP"
-      id="head-meta-og-locale"
-    />
-    <meta
-      property="og:type"
-      content="website"
-      id="head-meta-og-type"
-    />
-    <meta
-      name="og:site_name"
-      content={SITE_NAME}
-      id="head-meta-og-site_name"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="og:locale" content="ja_JP" id="head-meta-og-locale" />
+    <meta property="og:type" content="website" id="head-meta-og-type" />
+    <meta name="og:site_name" content={SITE_NAME} id="head-meta-og-site_name" />
     <meta
       property="og:image"
       content={`${SITE_URL}"/image.png"`}
       id="head-meta-og-image"
     />
-    <meta
-      name="og:image:width"
-      content="1200"
-      id="head-meta-og-image-width"
-    />
-    <meta
-      name="og:image:height"
-      content="630"
-      id="head-meta-og-image-height"
-    />
+    <meta name="og:image:width" content="1200" id="head-meta-og-image-width" />
+    <meta name="og:image:height" content="630" id="head-meta-og-image-height" />
     <meta
       name="twitter:card"
       content="summary_large_image"
@@ -85,23 +58,10 @@ const { title, description, keywords } = Astro.props
       content="@ANDOcloisonne"
       id="head-meta-og-twitter-site"
     />
-    <meta
-      name="theme-color"
-      content="#ffffff"
-    />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="/favicon.svg"
-    />
-    <link
-      rel="manifest"
-      href="/manifest.webmanifest"
-    />
-    <link
-      rel="canonical"
-      href={SITE_URL}
-    />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="canonical" href={SITE_URL} />
     <meta
       name="description"
       content={description || SITE_DESCRIPTION}
@@ -125,9 +85,8 @@ const { title, description, keywords } = Astro.props
 
     <ViewTransitions />
   </head>
-  <body transition:animate={fade({ duration: '1s' })}>
-    <TheHeader />
-    <TheSmoothScroll client:only>
+  <body transition:animate={fade({ duration: "1s" })}>
+    <TheSmoothScroll>
       <slot />
     </TheSmoothScroll>
     <style is:global>
@@ -144,7 +103,7 @@ const { title, description, keywords } = Astro.props
       }
       html {
         font-family: system-ui, sans-serif;
-        background: #13151a;
+        background: #fff;
         background-size: 224px;
       }
       code {
