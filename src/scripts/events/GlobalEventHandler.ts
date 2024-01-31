@@ -1,53 +1,36 @@
-import {
-  CALLBACK_TIMING,
-  EVENT_TYPE,
-  PASSIVE,
-} from '@constants/event'
-import {
-  GlobalEventHandlerBase,
-} from '@scripts/events/GlobalEventHandlerBase'
-import {
-  type CallbackTiming,
-  type EventType,
-  type GlobalEventCallback,
-} from '@tsTypes/event'
-import {
-  debounce,
-  throttle,
-} from '@utils/event'
+import { CALLBACK_TIMING, EVENT_TYPE, PASSIVE } from "@constants/event";
+import { GlobalEventHandlerBase } from "@scripts/events/GlobalEventHandlerBase";
+import { type CallbackTiming, type EventType, type GlobalEventCallback } from "@tsTypes/event";
+import { debounce, throttle } from "@utils/event";
 
 /**
  * window の任意のイベントにコールバックを紐づけて発火させるクラス。<br>
  * 登録されているコールバックの数をみて自動的に一時停止/再開する。
  */
 export class GlobalEventHandler extends GlobalEventHandlerBase {
-  #eventType: EventType
-  #boundOnEvent: GlobalEventCallback
+  #eventType: EventType;
+  #boundOnEvent: GlobalEventCallback;
 
   /**
    * @param eventType イベント種別
    * @param callbackTiming コールバック関数を発火するタイミング
    * @param interval コールバック関数の実行間隔
    */
-  constructor(
-    eventType: EventType,
-    callbackTiming: CallbackTiming = CALLBACK_TIMING.EVERYTIME,
-    interval: number = 0,
-  ) {
-    super()
+  constructor(eventType: EventType, callbackTiming: CallbackTiming = CALLBACK_TIMING.EVERYTIME, interval: number = 0) {
+    super();
 
-    this.#eventType = eventType
+    this.#eventType = eventType;
 
     switch (callbackTiming) {
       case CALLBACK_TIMING.THROTTLE:
-        this.#boundOnEvent = throttle(interval, this._onEvent.bind(this))
+        this.#boundOnEvent = throttle(interval, this._onEvent.bind(this));
         break;
       case CALLBACK_TIMING.DEBOUNCE:
-        this.#boundOnEvent = debounce(interval, this._onEvent.bind(this))
+        this.#boundOnEvent = debounce(interval, this._onEvent.bind(this));
         break;
       case CALLBACK_TIMING.EVERYTIME:
       default:
-        this.#boundOnEvent = this._onEvent.bind(this)
+        this.#boundOnEvent = this._onEvent.bind(this);
     }
   }
 
@@ -56,9 +39,9 @@ export class GlobalEventHandler extends GlobalEventHandlerBase {
    * @param callback
    */
   add(callback: GlobalEventCallback): void {
-    this._addCallback(callback)
-    if (import.meta.env.PUBLIC_CLIENT && (this._callbacks.length === 1)) {
-      window.addEventListener(this.#eventType, this.#boundOnEvent, PASSIVE.TRUE)
+    this._addCallback(callback);
+    if (import.meta.env.PUBLIC_CLIENT && this._callbacks.length === 1) {
+      window.addEventListener(this.#eventType, this.#boundOnEvent, PASSIVE.TRUE);
     }
   }
 
@@ -67,13 +50,13 @@ export class GlobalEventHandler extends GlobalEventHandlerBase {
    * @param callback
    */
   remove(callback: GlobalEventCallback): void {
-    const isRemoved = this._removeCallback(callback)
+    const isRemoved = this._removeCallback(callback);
     if (!isRemoved) {
-      return
+      return;
     }
 
-    if (import.meta.env.PUBLIC_CLIENT && (this._callbacks.length === 0)) {
-      window.removeEventListener(this.#eventType, this.#boundOnEvent, PASSIVE.TRUE as EventListenerOptions)
+    if (import.meta.env.PUBLIC_CLIENT && this._callbacks.length === 0) {
+      window.removeEventListener(this.#eventType, this.#boundOnEvent, PASSIVE.TRUE as EventListenerOptions);
     }
   }
 
@@ -83,7 +66,7 @@ export class GlobalEventHandler extends GlobalEventHandlerBase {
    */
   protected override _callback(...param: any[]): void {
     for (const callback of this._callbacks) {
-      callback(...param)
+      callback(...param);
     }
   }
 
@@ -92,16 +75,16 @@ export class GlobalEventHandler extends GlobalEventHandlerBase {
    * @param event
    */
   protected _onEvent(...arg: any[]): void {
-    this._callback()
+    this._callback();
   }
 
   /**
    * 強制的にコールバックを呼び出す
    */
   emit(): void {
-    this._callback()
+    this._callback();
   }
 }
 
-export const globalOrientationChange = new GlobalEventHandler(EVENT_TYPE.ORIENTATION_CHANGE)
-export const globalResize = new GlobalEventHandler(EVENT_TYPE.RESIZE)
+export const globalOrientationChange = new GlobalEventHandler(EVENT_TYPE.ORIENTATION_CHANGE);
+export const globalResize = new GlobalEventHandler(EVENT_TYPE.RESIZE);

@@ -1,43 +1,54 @@
 import { CANVAS_CONFIG } from "@constants/canvas";
-import { Renderer, Camera, Transform, Program, Mesh, AxesHelper } from "ogl";
-import { Plane, Sphere, Box } from "ogl";
+import { Renderer, Camera, Transform, AxesHelper } from "ogl";
 import { ScreenUtil } from "@utils/ScreenUtil";
 import { animationFrame } from "@scripts/events/AnimationFrameHandler";
 import { globalResize } from "@scripts/events/GlobalEventHandler";
 import type { OGLRenderingContext } from "ogl";
+import { smoothScroll } from "@scripts/SmoothScroll/SmoothScroll";
+import { gsapK } from "@utils/AutoKillGSAP";
+/**
+ * WEBGL Canvas の基底クラス
+ */
 class BaseWebGLCanvas {
-  #containerElement: HTMLDivElement;
+  #containerElement: HTMLElement;
   #gl: OGLRenderingContext;
   #renderer: Renderer;
   #scene: Transform;
   #axesHelper: AxesHelper;
-  #addOnUpdate: Array<() => void>;
   #boundOnResize: () => void;
   #boundOnRender: ({ time }: { time: number }) => void;
+  #boundOnScroll: () => void;
   protected _camera: Camera;
-  constructor({ element }: { element: HTMLDivElement }) {
+  constructor({ element }: { element: HTMLElement }) {
     this.#containerElement = element;
-    this.#renderer = new Renderer({ dpr: 2 });
+    this.#renderer = new Renderer({
+      width: ScreenUtil.width,
+      height: ScreenUtil.height,
+      dpr: 2,
+      alpha: true,
+    });
     this.#gl = this.#renderer.gl;
     /**
      * @task DOMとmeshの位置合わせ
      */
-    this._camera = new Camera(this.#gl, { fov: 35 });
+    this._camera = new Camera(this.#gl, {
+      fov: CANVAS_CONFIG.CAMERA_FOV,
+      aspect: ScreenUtil.aspect,
+      near: 1,
+      far: 100000,
+    });
     this.#scene = new Transform();
 
     this.#axesHelper = new AxesHelper(this.#gl, {});
+    this.#axesHelper.setParent(this.#scene);
 
-    this.#addOnUpdate = [];
     this.#boundOnResize = this._onResize.bind(this);
-    this.#boundOnRender = this.#render.bind(this);
+    this.#boundOnRender = this.render.bind(this);
+    this.#boundOnScroll = this._onScroll.bind(this);
 
     this.#initCamera();
     this.#initRenderer();
     this._addEventListener();
-    this._onResize();
-
-    const time = performance.now() / 1000;
-    this.#render({ time });
   }
 
   /**
@@ -87,13 +98,6 @@ class BaseWebGLCanvas {
   }
 
   /**
-   * add update
-   */
-  addOnUpdate(callback: () => void) {
-    this.#addOnUpdate.push(callback);
-  }
-
-  /**
    * カメラ初期化
    */
   #initCamera() {
@@ -101,8 +105,8 @@ class BaseWebGLCanvas {
      * @task DOMとmeshの位置合わせ
      */
     const fovRad = (CANVAS_CONFIG.CAMERA_FOV / 2) * (Math.PI / 180);
-    // const dist = this.height / 2 / Math.tan(fovRad);
-    this._camera.position.set(0, 1, 7);
+    const dist = this.height / 2 / Math.tan(fovRad);
+    this._camera.position.set(0, 0, dist);
     this._camera.lookAt([0, 0, 0]);
   }
 
@@ -111,33 +115,33 @@ class BaseWebGLCanvas {
    */
   #initRenderer() {
     this.#containerElement.appendChild(this.#gl.canvas as HTMLCanvasElement);
-    this.#gl.clearColor(1, 1, 1, 1);
+    this.#gl.clearColor(1, 1, 1, 0);
   }
 
   /**
    * update
    */
-  #update() {
-    this.#addOnUpdate.forEach((callback) => {
-      callback();
-    });
-  }
+  protected _update() {}
   /**
    * レンダリング
    * @param {object} param0
    * @param {number} param0.time 経過秒数
    */
-  #render({ time }: { time: number }) {
-    console.log("[BaseWebGlCanvas.render]", this.#renderer);
+  render({ time }: { time: number }) {
     this.#renderer.render({ scene: this.#scene, camera: this._camera });
-    this.#update();
+    this._update();
   }
+
+  /**
+   * スクロールイベント
+   */
+  protected _onScroll() {}
 
   /**
    * リサイズ
    */
   protected _onResize() {
-    console.log("resize");
+    console.log("BaseWebGLCanvas: setSize");
     this.#renderer.setSize(ScreenUtil.width, ScreenUtil.height);
     this._camera.perspective({
       aspect: this.#gl.canvas.width / this.#gl.canvas.height,
@@ -150,6 +154,8 @@ class BaseWebGLCanvas {
   protected _addEventListener() {
     globalResize.add(this.#boundOnResize);
     animationFrame.add(this.#boundOnRender);
+    // スクロールイベント
+    smoothScroll.addOnScroll(this.#boundOnScroll);
   }
 
   /**

@@ -1,7 +1,7 @@
 import {defineConfig, sharpImageService} from "astro/config";
 import {SITE_URL} from "./src/constants/site";
 import vue from "@astrojs/vue";
-
+import glsl from "vite-plugin-glsl"
 // https://astro.build/config
 export default defineConfig({
   srcDir: "./src",
@@ -16,7 +16,7 @@ export default defineConfig({
   scopedStyleStrategy: "class",
   integrations: [vue()],
   vite: {
-    // plugins: ['prettier-plugin-astro'],
+    plugins: [glsl()],
     overrides: [
       {
         files: "*.astro",
