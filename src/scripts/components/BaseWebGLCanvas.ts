@@ -121,7 +121,7 @@ class BaseWebGLCanvas {
   /**
    * update
    */
-  protected _update() {}
+  protected _update() { }
   /**
    * レンダリング
    * @param {object} param0
@@ -135,14 +135,13 @@ class BaseWebGLCanvas {
   /**
    * スクロールイベント
    */
-  protected _onScroll() {}
+  protected _onScroll() { }
 
   /**
    * リサイズ
    */
   protected _onResize() {
-    console.log("BaseWebGLCanvas: setSize");
-    this.#renderer.setSize(ScreenUtil.width, ScreenUtil.height);
+    this.#renderer.setSize(window.innerWidth, window.innerHeight);
     this._camera.perspective({
       aspect: this.#gl.canvas.width / this.#gl.canvas.height,
     });

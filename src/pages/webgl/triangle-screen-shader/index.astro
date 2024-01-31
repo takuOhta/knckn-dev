@@ -37,9 +37,15 @@ const PAGE_CLASSNAME = "webgl";
   }
 
   .canvas-wrapper {
+    position: relative;
+    display: block;
     width: 100%;
     height: 100%;
     background: $color-bg-body;
+    >canvas {
+      width: 100%;
+      height: 100%;
+    }
   }
 </style>
 

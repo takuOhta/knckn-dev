@@ -39,8 +39,9 @@ export class GlobalEventHandler extends GlobalEventHandlerBase {
    * @param callback
    */
   add(callback: GlobalEventCallback): void {
+    console.log("GlobalEventHandler.add", this.#eventType);
     this._addCallback(callback);
-    if (import.meta.env.PUBLIC_CLIENT && this._callbacks.length === 1) {
+    if (this._callbacks.length === 1) {
       window.addEventListener(this.#eventType, this.#boundOnEvent, PASSIVE.TRUE);
     }
   }
@@ -55,7 +56,7 @@ export class GlobalEventHandler extends GlobalEventHandlerBase {
       return;
     }
 
-    if (import.meta.env.PUBLIC_CLIENT && this._callbacks.length === 0) {
+    if (this._callbacks.length === 0) {
       window.removeEventListener(this.#eventType, this.#boundOnEvent, PASSIVE.TRUE as EventListenerOptions);
     }
   }
