@@ -37,14 +37,6 @@ class TriangleScreenShaderCanvas extends BaseWebGLCanvas {
     this.#meshArr.forEach((mesh) => {
       super.scene.addChild(mesh);
     });
-    // メッシュの位置を調整
-    // ScreenUtil.resize();
-    // const x = imgElement.getBoundingClientRect().left - this.width / 2 + mesh.getWidth() / 2;
-    // const y = -(imgElement.getBoundingClientRect().top + window.scrollY) + this.height / 2 - mesh.getHeight() / 2;
-    // mesh.setPosition(x, y, 1);
-    // mesh.setParent(this.#group);
-    // this.#group.setParent(this.scene);
-    // this.#meshs.push(mesh);
   }
 
   /**

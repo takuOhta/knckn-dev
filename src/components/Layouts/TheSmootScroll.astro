@@ -8,8 +8,6 @@
 
 <style lang="scss" is:global></style>
 <script>
-  import { smoothScroll } from "@scripts/SmoothScroll/SmoothScroll";
-  smoothScroll.init(
-    document.querySelector<HTMLElement>('[data-smooth-scroll="wrap"]')
-  );
+  import { SmoothScroll } from "@scripts/SmoothScroll/SmoothScroll";
+  new SmoothScroll();
 </script>

@@ -17,20 +17,19 @@ import Layout from "@layouts/Layout.astro";
 /**
  * components
  */
-import Canvas from "@components/Parts/WebGL/Canvas.astro";
+
 /**
  * variables
  */
 const PAGE_ID = PAGE.INDEX.ID;
 const PAGE_CLASSNAME = PAGE.INDEX.CLASSNAME;
-const SITE_NAME = import.meta.env.PUBLIC_SITE_NAME
-  ? import.meta.env.PUBLIC_SITE_NAME
-  : "環境変数が設定されていません";
+const SITE_NAME = import.meta.env.PUBLIC_SITE_NAME ? import.meta.env.PUBLIC_SITE_NAME : "環境変数が設定されていません";
 ---
 
 <Layout title="Welcome to Astro." description="" keywords="">
-  <Canvas />
-  <main class={`p-${PAGE_CLASSNAME}`}></main>
+  <main class={`p-${PAGE_CLASSNAME}`}>
+    <section class="dummy"></section>
+  </main>
 </Layout>
 
 <style lang="scss" is:global>
@@ -46,5 +45,11 @@ const SITE_NAME = import.meta.env.PUBLIC_SITE_NAME
     justify-content: center;
     padding: 100px 0;
     z-index: 1;
+  }
+
+  .dummy {
+    width: 100%;
+    height: 400vh;
+    background: linear-gradient(#eee, #000);
   }
 </style>

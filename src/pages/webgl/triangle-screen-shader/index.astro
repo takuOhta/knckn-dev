@@ -2,12 +2,10 @@
 /**
  * astro
  */
-import { Image } from "astro:assets";
 
 /**
  * constants
  */
-import { PAGE } from "@constants/page";
 
 /**
  * layouts
@@ -47,7 +45,7 @@ const PAGE_CLASSNAME = "webgl";
   // /**
   // * @description クライアントサイドで実行されるスクリプトはここに記述します。
   // */
-  import { TriangleScreenShaderCanvas } from "@scripts/components/Webgl/TriangleScreenShaderCanvas";
+  import { TriangleScreenShaderCanvas } from "@pages/webgl/triangle-screen-shader/TriangleScreenShaderCanvas";
 
   // canvasタグの設定
   class AstroCanvas extends HTMLElement {

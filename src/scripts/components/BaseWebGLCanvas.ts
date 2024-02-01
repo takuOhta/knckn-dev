@@ -155,7 +155,7 @@ class BaseWebGLCanvas {
     globalResize.add(this.#boundOnResize);
     animationFrame.add(this.#boundOnRender);
     // スクロールイベント
-    smoothScroll.addOnScroll(this.#boundOnScroll);
+    // smoothScroll.addOnScroll(this.#boundOnScroll);
   }
 
   /**

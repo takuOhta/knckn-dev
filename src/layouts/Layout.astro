@@ -7,18 +7,11 @@ import { ViewTransitions, fade } from "astro:transitions";
 /**
  * constants
  */
-import {
-  SITE_URL,
-  SITE_NAME,
-  SITE_TITLE,
-  SITE_KEYWORD,
-  SITE_DESCRIPTION,
-} from "@constants/site";
+import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_KEYWORD, SITE_DESCRIPTION } from "@constants/site";
 
 /**
  * components
  */
-import TheSmoothScroll from "@components/Layouts/TheSmootScroll.astro";
 
 /**
  * Props
@@ -41,65 +34,30 @@ const { title, description, keywords } = Astro.props;
     <meta name="og:locale" content="ja_JP" id="head-meta-og-locale" />
     <meta property="og:type" content="website" id="head-meta-og-type" />
     <meta name="og:site_name" content={SITE_NAME} id="head-meta-og-site_name" />
-    <meta
-      property="og:image"
-      content={`${SITE_URL}"/image.png"`}
-      id="head-meta-og-image"
-    />
+    <meta property="og:image" content={`${SITE_URL}"/image.png"`} id="head-meta-og-image" />
     <meta name="og:image:width" content="1200" id="head-meta-og-image-width" />
     <meta name="og:image:height" content="630" id="head-meta-og-image-height" />
-    <meta
-      name="twitter:card"
-      content="summary_large_image"
-      id="head-meta-og-twitter-card"
-    />
-    <meta
-      name="twitter:site"
-      content="@ANDOcloisonne"
-      id="head-meta-og-twitter-site"
-    />
+    <meta name="twitter:card" content="summary_large_image" id="head-meta-og-twitter-card" />
+    <meta name="twitter:site" content="@ANDOcloisonne" id="head-meta-og-twitter-site" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="canonical" href={SITE_URL} />
-    <meta
-      name="description"
-      content={description || SITE_DESCRIPTION}
-      id="head-meta-description"
-    />
-    <meta
-      name="keywords"
-      content={keywords || SITE_KEYWORD}
-      id="head-meta-keywords"
-    />
-    <meta
-      property="og:title"
-      content={title || SITE_TITLE}
-      id="head-meta-og-title"
-    />
-    <meta
-      property="og:description"
-      content={description}
-      id="head-meta-og-description"
-    />
+    <meta name="description" content={description || SITE_DESCRIPTION} id="head-meta-description" />
+    <meta name="keywords" content={keywords || SITE_KEYWORD} id="head-meta-keywords" />
+    <meta property="og:title" content={title || SITE_TITLE} id="head-meta-og-title" />
+    <meta property="og:description" content={description} id="head-meta-og-description" />
 
     <ViewTransitions />
   </head>
   <body transition:animate={fade({ duration: "1s" })}>
-    <TheSmoothScroll>
-      <slot />
-    </TheSmoothScroll>
+    <slot />
     <style is:global>
       :root {
         --accent: 136, 58, 234;
         --accent-light: 224, 204, 250;
         --accent-dark: 49, 10, 101;
-        --accent-gradient: linear-gradient(
-          45deg,
-          rgb(var(--accent)),
-          rgb(var(--accent-light)) 30%,
-          white 60%
-        );
+        --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
       }
       html {
         font-family: system-ui, sans-serif;
@@ -118,5 +76,9 @@ const { title, description, keywords } = Astro.props;
           monospace;
       }
     </style>
+    <script>
+      import { SmoothScroll } from "@scripts/SmoothScroll/SmoothScroll";
+      new SmoothScroll();
+    </script>
   </body>
 </html>
