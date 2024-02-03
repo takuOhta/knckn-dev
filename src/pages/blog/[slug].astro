@@ -3,31 +3,15 @@ import Layout from "@layouts/Layout.astro";
 
 const { slug } = Astro.params;
 
-let res = await fetch(`https://knckndev.wordpress.com/wp-json/wp/v2/posts?slug=${slug}`)
-  .then((response) => {
-    if (!response.ok) {
-      console.error("サーバーエラー", response);
-    }
-  })
-  .catch((error) => {
-    console.error("通信に失敗しました", error);
-  });
+let res = await fetch(`${import.meta.env.PUBLIC_AAPI_ENDPOINT_WORDPRESS}posts?_embed&slug=${slug}`);
 let [post] = await res.json();
 
 // The getStaticPaths() is required for static Astro sites.
 // If using SSR, you will not need this function.
 export async function getStaticPaths() {
-  let data = await fetch("https://knckndev.wordpress.com/wp-json/wp/v2/posts")
-    .then((response) => {
-      if (!response.ok) {
-        console.error("サーバーエラー", response);
-      }
-    })
-    .catch((error) => {
-      console.error("通信に失敗しました", error);
-    });
+  let data = await fetch(`${import.meta.env.PUBLIC_AAPI_ENDPOINT_WORDPRESS}posts`);
   let posts = await data.json();
-  console.log(data);
+
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post: post },
