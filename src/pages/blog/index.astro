@@ -1,0 +1,48 @@
+---
+// constants
+import { PAGE } from "@constants/page";
+// components
+import Layout from "@layouts/Layout.astro";
+import { Image } from "astro:assets";
+// apis
+import { getMicroCMSBlogs } from "@scripts/apis/getMicroCMSBlogs.ts";
+const response = await getMicroCMSBlogs({ fields: ["id", "title"] });
+const listBlog = response.contents;
+// variables
+const PAGE_ID = PAGE.BLOG.ID;
+const PAGE_CLASSNAME = PAGE.BLOG.CLASSNAME;
+---
+
+<Layout title="Welcome to Astro." description="" keywords="">
+  <main class={`p-${PAGE_CLASSNAME}`}>
+    <section class={`p-${PAGE_CLASSNAME}-list`}>
+      <ul class="list">
+        {
+          listBlog.map((content: any) => (
+            <li class="list-item">
+              <a href={`/blog/${content.id}`} class="inner">
+                {content.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+</Layout>
+
+<style lang="scss" is:global>
+  $PAGE_CLASSNAME: "blog";
+  .p-#{$PAGE_CLASSNAME} {
+  }
+
+  .p-#{$PAGE_CLASSNAME}-body {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    justify-content: center;
+    padding: 100px 0;
+    z-index: 1;
+  }
+</style>

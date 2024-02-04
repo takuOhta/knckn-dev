@@ -2,7 +2,7 @@
  * ページのID管理
  */
 export const PAGE = {
-  INDEX: { 
+  INDEX: {
     ID: "INDEX",
     CLASSNAME: "index",
   },
@@ -10,16 +10,12 @@ export const PAGE = {
     ID: "ABOUT",
     CLASSNAME: "about",
   },
-  NEWS: {
-    ID: "NEWS",
-    CLASSNAME: "news",
+  BLOG: {
+    ID: "BLOG",
+    CLASSNAME: "blog",
   },
-  NOTFOUND: {
-    ID: "NOTFOUND",
-    CLASSNAME: "notfound",
+  BLOG_DETAIL: {
+    ID: "BLOG_DETAIL",
+    CLASSNAME: "blog-detail",
   },
-  LOWER: {
-    ID: "LOWER",
-    CLASSNAME: "lower",
-  },
-} as const satisfies Record<string, {ID: string, CLASSNAME: string}>
+} as const satisfies Record<string, { ID: string; CLASSNAME: string }>;
