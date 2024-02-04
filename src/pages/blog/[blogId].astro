@@ -6,6 +6,7 @@ import Layout from "@layouts/Layout.astro";
 import { Image } from "astro:assets";
 // apis
 import { getMicroCMSBlogs, getMicroCMSBlogsDetail } from "@scripts/apis/getMicroCMSBlogs.ts";
+
 // 詳細記事ページの全パスを取得
 export async function getStaticPaths() {
   const response = await getMicroCMSBlogs({ fields: ["id"] });
