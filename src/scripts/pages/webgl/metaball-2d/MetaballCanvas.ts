@@ -33,9 +33,11 @@ class MetaballCanvas extends BaseWebGLCanvas {
         uAspect: { value: ScreenUtil.aspect },
         uResolution: { value: new Vec2(ScreenUtil.width, ScreenUtil.height) },
       },
+      transparent: true,
     });
     this.#programArr.push(program);
     this.#meshArr.push(new Mesh(super.gl, { geometry, program }));
+    this.#setMeshSize();
     this.#meshArr.forEach((mesh) => {
       super.scene.addChild(mesh);
     });
@@ -45,9 +47,10 @@ class MetaballCanvas extends BaseWebGLCanvas {
    * メッシュのリサイズ
    */
   #setMeshSize() {
+    console.log("setMeshSize");
     this.#meshArr.forEach((mesh) => {
-      const width = this.#element.offsetWidth;
-      const height = this.#element.offsetHeight;
+      const width = ScreenUtil.width;
+      const height = ScreenUtil.height;
       mesh.scale.set(width, height, 1);
     });
   }
@@ -77,6 +80,7 @@ class MetaballCanvas extends BaseWebGLCanvas {
   override _onResize() {
     super._onResize();
     ScreenUtil.resize();
+    this.#setMeshSize();
     this.#programArr.forEach((program) => {
       program.uniforms.uAspect.value = ScreenUtil.aspect;
     });

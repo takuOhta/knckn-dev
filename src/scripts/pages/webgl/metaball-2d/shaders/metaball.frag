@@ -13,12 +13,10 @@ vec2 random2( vec2 p ) {
 
 void main() {
   vec2 st = vUv.st;
-  // vec2 st = gl_FragCoord.xy/uResolution.xy;
+  // vec2 st = gl_FragCoord.xy / uResolution.xy;
   // st.x *= uResolution.x/uResolution.y;
-  // アスペクト調整
-  st.x *= uAspect;
-  // グリッドのスケール
-  st *= 4.0;
+  // グリッドのスケール アスペクト調整
+  st *= vec2(3.0 * uAspect, 3.0);
   // グリッド
   vec2 i_st = floor(st);
   vec2 f_st = fract(st);
@@ -26,39 +24,41 @@ void main() {
   // 最短距離 初期値1
   float m_dist = 1.0;
 
-  for(int x=-1; x <1; x++) {
-    for(int y=-1; y <1; y++) {
+  for(int y= -1; y <=1; y++) {
+    for(int x= -1; x <=1; x++) {
       // 隣接する8つのグリッドを取得
       vec2 neighbor = vec2(float(x), float(y));
 
       // グリッド内の現在地＋隣接する場所からのランダムな位置。
-      vec2 offset = random2(i_st + neighbor);
+      vec2 point = random2(i_st + neighbor);
 
       // オフセットをアニメーション
-      offset = 0.5 + 0.25 * sin(uTime + 6.2831 * offset);
+      point = 0.5 + 0.5 * sin(uTime + 8.2831 * point);
 
-      // セルの位置
-      vec2 pos = neighbor  + offset - f_st;
+      // 自セルの中のpointと隣接セルとベクター
+      vec2 diff = neighbor + point - f_st;
 
       // セルの距離
-      float dist = length(pos);
+      float dist = length(diff);
 
       // 最短距離を更新
-      m_dist = min(m_dist, m_dist * dist);
+      m_dist = min(m_dist, m_dist * dist );
     }
   }
 
   // 
-  float result = smoothstep(0., 0.1, m_dist*2.168) ;
+  float result = step(0.1, m_dist);
   // メタボールのカラー
-  vec3 color = vec3(0.0);
-  color += vec3(74., 255., 195.) / 255.;
-  // // 境界線の処理
-  // if(result == 1.0) {
-  //   color = vec3(1.0);
-  // }else {
-  //   color = ballColor;
-  // }
+  vec3 color = vec3(m_dist);
+  vec3 ballColor = vec3(74., 255., 195.) / 255.;
+  // 境界線の処理
+  if(result == 1.0) {
+    color = vec3(1.0);
+  }else {
+    color = ballColor;
+  }
+   // Draw grid
+  color.r -= step(.98, f_st.x) + step(.98, f_st.y);
 
-  gl_FragColor = vec4(color,result);
+  gl_FragColor = vec4(color, 1.0);
 }
