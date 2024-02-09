@@ -91,7 +91,8 @@ void main() {
   // vec2 st = gl_FragCoord.xy / uResolution.xy;
   // st.x *= uResolution.x/uResolution.y;
   // グリッドのスケール アスペクト調整
-  st *= vec2(1.5 * uAspect, 1.5);
+  float size = 2.4;
+  st *= vec2(size * uAspect, size);
   // グリッド
   vec2 i_st = floor(st);
   vec2 f_st = fract(st);
@@ -125,9 +126,10 @@ void main() {
   float edge = smoothstep(0.12, 0.4, m_dist);
   float edge2 = smoothstep(0.1, 0.4, m_dist);
   // メタボールのカラー
+  vec3 baseColor = vec3(44., 80., 130.) / 255.;
   vec3 dist = vec3(m_dist);
-  vec3 color = vec3(74., 122., 195.) / 255.;
-  vec3 ballColor = vec3(74., 255., 195.) / 255.;
+  vec3 color = baseColor;
+  vec3 ballColor = baseColor;
   color = mix(ballColor, color, bg - edge - edge2);
   // // 境界線の処理
   // if(result == 1.0) {
@@ -137,6 +139,6 @@ void main() {
   // }
    // Draw grid
   // color.r -= step(.98, f_st.x) + step(.98, f_st.y);
-
-  gl_FragColor = vec4(color, bg - edge - edge2);
+  float alpha = (bg - edge - edge2) * 0.92;
+  gl_FragColor = vec4(color, alpha);
 }
