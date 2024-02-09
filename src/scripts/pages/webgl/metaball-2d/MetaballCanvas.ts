@@ -1,4 +1,4 @@
-import { BaseWebGLCanvas } from "@scripts/components/BaseWebGLCanvas";
+import { BaseOGLCanvas } from "@scripts/components/BaseOGLCanvas";
 import { Color, Program, Triangle, Transform, Mesh, Vec2 } from "ogl";
 import vertexShader from "./shaders/metaball.vert";
 import fragmentShader from "./shaders/metaball.frag";
@@ -6,7 +6,7 @@ import { ScreenUtil } from "@utils/ScreenUtil";
 /**
  * IndexページのWEBGL Canvas
  */
-class MetaballCanvas extends BaseWebGLCanvas {
+class MetaballCanvas extends BaseOGLCanvas {
   #element: HTMLElement;
   #group: Transform = new Transform();
   #programArr: Array<Program> = [];

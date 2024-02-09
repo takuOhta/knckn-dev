@@ -1,4 +1,4 @@
-import { BaseWebGLCanvas } from "@scripts/components/BaseWebGLCanvas";
+import { BaseOGLCanvas } from "@scripts/components/BaseOGLCanvas";
 import { Color, Program, Triangle, Transform, Mesh } from "ogl";
 import vertexShader from "./shaders/triangle-screen-shader.vert";
 import fragmentShader from "./shaders/triangle-screen-shader.frag";
@@ -6,7 +6,7 @@ import { ScreenUtil } from "@utils/ScreenUtil";
 /**
  * IndexページのWEBGL Canvas
  */
-class TriangleScreenShaderCanvas extends BaseWebGLCanvas {
+class TriangleScreenShaderCanvas extends BaseOGLCanvas {
   #element: HTMLElement;
   #group: Transform = new Transform();
   #programArr: Array<Program> = [];

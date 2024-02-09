@@ -9,7 +9,7 @@ import { gsapK } from "@utils/AutoKillGSAP";
 /**
  * WEBGL Canvas の基底クラス
  */
-class BaseWebGLCanvas {
+class BaseOGLCanvas {
   #containerElement: HTMLElement;
   #gl: OGLRenderingContext;
   #renderer: Renderer;
@@ -121,7 +121,7 @@ class BaseWebGLCanvas {
   /**
    * update
    */
-  protected _update() { }
+  protected _update() {}
   /**
    * レンダリング
    * @param {object} param0
@@ -135,7 +135,7 @@ class BaseWebGLCanvas {
   /**
    * スクロールイベント
    */
-  protected _onScroll() { }
+  protected _onScroll() {}
 
   /**
    * リサイズ
@@ -166,4 +166,4 @@ class BaseWebGLCanvas {
   }
 }
 
-export { BaseWebGLCanvas };
+export { BaseOGLCanvas };
