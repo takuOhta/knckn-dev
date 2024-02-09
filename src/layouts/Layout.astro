@@ -29,53 +29,20 @@ const { title, description, keywords } = Astro.props;
 <html lang="en" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
-    <title>{title || SITE_TITLE}</title>
+    <title>{`${title} | ${SITE_NAME}`}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="og:locale" content="ja_JP" id="head-meta-og-locale" />
     <meta property="og:type" content="website" id="head-meta-og-type" />
-    <meta name="og:site_name" content={SITE_NAME} id="head-meta-og-site_name" />
-    <meta property="og:image" content={`${SITE_URL}"/image.png"`} id="head-meta-og-image" />
-    <meta name="og:image:width" content="1200" id="head-meta-og-image-width" />
-    <meta name="og:image:height" content="630" id="head-meta-og-image-height" />
-    <meta name="twitter:card" content="summary_large_image" id="head-meta-og-twitter-card" />
-    <meta name="twitter:site" content="" id="head-meta-og-twitter-site" />
-    <meta name="theme-color" content="#ffffff" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="canonical" href={SITE_URL} />
     <meta name="description" content={description || SITE_DESCRIPTION} id="head-meta-description" />
     <meta name="keywords" content={keywords || SITE_KEYWORD} id="head-meta-keywords" />
-    <meta property="og:title" content={title || SITE_TITLE} id="head-meta-og-title" />
+    <meta property="og:title" content={`${title} | ${SITE_NAME}`} id="head-meta-og-title" />
     <meta property="og:description" content={description} id="head-meta-og-description" />
 
-    <ViewTransitions />
+    <!-- <ViewTransitions /> -->
   </head>
-  <body transition:animate={fade({ duration: "1s" })}>
+  <body>
     <slot />
-    <style is:global>
-      :root {
-        --accent: 136, 58, 234;
-        --accent-light: 224, 204, 250;
-        --accent-dark: 49, 10, 101;
-        --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
-      }
-      html {
-        font-family: system-ui, sans-serif;
-        background: #fff;
-        background-size: 224px;
-      }
-      code {
-        font-family:
-          Menlo,
-          Monaco,
-          Lucida Console,
-          Liberation Mono,
-          DejaVu Sans Mono,
-          Bitstream Vera Sans Mono,
-          Courier New,
-          monospace;
-      }
-    </style>
     <script>
       import { SmoothScroll } from "@scripts/SmoothScroll/SmoothScroll";
       new SmoothScroll();
