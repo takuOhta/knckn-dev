@@ -8,7 +8,6 @@ class GltfLoader extends BaseThreeCanvas {
     super({ canvasElement });
     this.#canvasElement = canvasElement;
 
-    // meshの初期化
     console.log("GltfLoader", this.#canvasElement);
   }
 }
