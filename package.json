@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@types/stats.js": "^0.17.0",
+    "@types/three": "^0.161.2",
     "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
     "css-loader": "^6.8.1",

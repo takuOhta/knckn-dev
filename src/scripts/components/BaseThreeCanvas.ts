@@ -2,11 +2,12 @@ import { gsap } from "gsap";
 import GUI from "lil-gui";
 
 // three
-import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
-import { Group } from "three/src/objects/Group";
-import { WebGLRenderer } from "three/src/renderers/WebGLRenderer";
-import { Scene } from "three/src/scenes/Scene";
-import { AxesHelper } from "three/src/helpers/AxesHelper";
+import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera.js";
+import { Group } from "three/src/objects/Group.js";
+import { WebGLRenderer } from "three/src/renderers/WebGLRenderer.js";
+import { Scene } from "three/src/scenes/Scene.js";
+import { AxesHelper } from "three/src/helpers/AxesHelper.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 import { CANVAS_CONFIG } from "@constants/canvas";
 
@@ -24,22 +25,23 @@ class BaseThreeCanvas {
   protected _canvasElement: HTMLCanvasElement;
   scene: Scene;
   group: Group;
-  #renderer: WebGLRenderer;
   #scrollY: number;
   #axesHelper: AxesHelper;
+  #orbitControls: OrbitControls;
   protected _camera: PerspectiveCamera;
   protected _guiParam: Object;
   protected _gui: GUI;
+  protected _renderer: WebGLRenderer;
   #boundOnResize: () => void;
   #boundOnRender: ({ time }: { time: number }) => void;
   // #boundOnAnimationFrame: (time: number) => void
 
-  constructor({ canvasElement }: { canvasElement: HTMLCanvasElement }) {
+  constructor({ canvasElement, orbitControls }: { canvasElement: HTMLCanvasElement; orbitControls?: boolean }) {
     this._canvasElement = canvasElement;
     // this._canvasElement.style.height = `${ CANVAS_CONFIG.HEIGHT_SCALE * 100 }%`
 
     // レンダラー初期化
-    this.#renderer = new WebGLRenderer({
+    this._renderer = new WebGLRenderer({
       canvas: this._canvasElement,
       antialias: true,
       alpha: true,
@@ -51,6 +53,8 @@ class BaseThreeCanvas {
     this._camera = new PerspectiveCamera(CANVAS_CONFIG.CAMERA_FOV, this.aspect, 1, 100000);
     this._camera.position.set(0, 0, dist);
 
+    // orbitControles
+    if (orbitControls) this.#orbitControls = new OrbitControls(this._camera, this._canvasElement);
     this._gui = new GUI();
     this._guiParam = {};
     this._initGui();
@@ -134,9 +138,9 @@ class BaseThreeCanvas {
    */
   #initRenderer() {
     const { clientWidth, clientHeight } = this._canvasElement;
-    this.#renderer?.setClearAlpha(0);
-    this.#renderer?.setPixelRatio(this.dpr);
-    this.#renderer.setSize(clientWidth, clientHeight, false);
+    this._renderer?.setClearAlpha(0);
+    this._renderer?.setPixelRatio(this.dpr);
+    this._renderer.setSize(clientWidth, clientHeight, false);
   }
 
   /**
@@ -174,7 +178,7 @@ class BaseThreeCanvas {
       // console.log('canvas resize')
       // this.#width = document.getElementById('__nuxt') ? document.getElementById('__nuxt')?.clientWidth as number: 0
       // this.#height = document.getElementById('__nuxt') ? document.getElementById('__nuxt')?.clientHeight as number: 0
-      this.#renderer.setSize(clientWidth, clientHeight, false);
+      this._renderer.setSize(clientWidth, clientHeight, false);
     }
   }
 
@@ -186,7 +190,7 @@ class BaseThreeCanvas {
   render({ time }: { time: number }) {
     // console.log('[BaseThreeCanvas.render]')
     this.updateSize();
-    this.#renderer.render(this.scene, this._camera);
+    this._renderer.render(this.scene, this._camera);
   }
 
   /**
@@ -205,8 +209,8 @@ class BaseThreeCanvas {
     const dist = this.height / 2 / Math.tan(fovRad);
     this._camera.aspect = this.aspect;
     this._camera.position.z = dist;
-    this.#renderer.setPixelRatio(this.dpr);
-    this.#renderer.setSize(this.width, this.height);
+    this._renderer.setPixelRatio(this.dpr);
+    this._renderer.setSize(this.width, this.height);
     this._camera.updateProjectionMatrix();
   }
 
