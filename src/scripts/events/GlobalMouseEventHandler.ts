@@ -1,5 +1,5 @@
-import { EVENT_TYPE } from '@constants/event'
-import { GlobalEventHandler } from '@scripts/events/GlobalEventHandler'
+import { EVENT_TYPE } from "@constants/event";
+import { GlobalEventHandler } from "@scripts/events/GlobalEventHandler";
 
 /**
  * MouseEvent にコールバックを紐づけて発火させるクラス。<br>
@@ -11,13 +11,13 @@ export class GlobalMouseEventHandler extends GlobalEventHandler {
    * @param event
    */
   override _onEvent(event: MouseEvent): void {
-    const { clientX, clientY } = event
-    this._callback({ clientX, clientY })
+    const { clientX, clientY } = event;
+    this._callback({ clientX, clientY });
   }
 }
 
-export const globalClick = new GlobalMouseEventHandler(EVENT_TYPE.CLICK)
-export const globalDoubleClick = new GlobalMouseEventHandler(EVENT_TYPE.DOUBLE_CLICK)
-export const globalMouseDown = new GlobalMouseEventHandler(EVENT_TYPE.MOUSE_DOWN)
-export const globalMouseMove = new GlobalMouseEventHandler(EVENT_TYPE.MOUSE_MOVE)
-export const globalMouseUp = new GlobalMouseEventHandler(EVENT_TYPE.MOUSE_UP)
+export const globalClick = new GlobalMouseEventHandler(EVENT_TYPE.CLICK);
+export const globalDoubleClick = new GlobalMouseEventHandler(EVENT_TYPE.DOUBLE_CLICK);
+export const globalMouseDown = new GlobalMouseEventHandler(EVENT_TYPE.MOUSE_DOWN);
+export const globalMouseMove = new GlobalMouseEventHandler(EVENT_TYPE.MOUSE_MOVE);
+export const globalMouseUp = new GlobalMouseEventHandler(EVENT_TYPE.MOUSE_UP);

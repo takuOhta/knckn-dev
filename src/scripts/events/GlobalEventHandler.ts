@@ -40,6 +40,7 @@ export class GlobalEventHandler extends GlobalEventHandlerBase {
    */
   add(callback: GlobalEventCallback): void {
     console.log("GlobalEventHandler.add", this.#eventType);
+    console.log("GlobalEventHandler.add", callback);
     this._addCallback(callback);
     if (this._callbacks.length === 1) {
       window.addEventListener(this.#eventType, this.#boundOnEvent, PASSIVE.TRUE);

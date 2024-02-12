@@ -64,7 +64,7 @@ class BaseThreeCanvas {
     this.scene.add(this.group);
 
     this.#axesHelper = new AxesHelper(200);
-    this.group.add(this.#axesHelper);
+    // this.group.add(this.#axesHelper);
 
     this.#scrollY = 0;
 
