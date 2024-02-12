@@ -1,0 +1,90 @@
+---
+/**
+ * astro
+ */
+
+/**
+ * constants
+ */
+
+/**
+ * layouts
+ */
+import Layout from "@layouts/Layout.astro";
+
+/**
+ * components
+ */
+/**
+ * variables
+ */
+const PAGE_CLASSNAME = "webgl";
+---
+
+<Layout title="gltfLoader" description="" keywords="">
+  <main class={`p-${PAGE_CLASSNAME}`}>
+    <astro-canvas class="canvas-wrapper">
+      <canvas></canvas>
+    </astro-canvas>
+    <p class="license">
+      3D Model :
+      <a href="https://qou.jp/usage_3d_jp">floraZia.com</a>
+    </p>
+  </main>
+</Layout>
+
+<style lang="scss" is:global>
+  @import url("https://fonts.googleapis.com/css2?family=Jost:wght@600&display=swap");
+  $PAGE_CLASSNAME: "webgl";
+  .p-#{$PAGE_CLASSNAME} {
+    width: 100%;
+    height: 100vh;
+  }
+
+  .canvas-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    > canvas {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .license {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: blueviolet;
+  }
+</style>
+
+<script>
+  // /**
+  // * @description クライアントサイドで実行されるスクリプトはここに記述します。
+  // */
+  import { GltfLoader } from "@scripts/pages/webgl/gltf-loader/GltfLoader";
+
+  // canvasタグの設定
+  class AstroCanvas extends HTMLElement {
+    #rootElement: HTMLElement;
+    #canvasElement: HTMLCanvasElement;
+    #canvas: GltfLoader;
+    constructor() {
+      super();
+      this.#rootElement = this;
+      this.#canvasElement = this.querySelector<HTMLCanvasElement>("canvas")!;
+      this.#canvas = new GltfLoader({ canvasElement: this.#canvasElement });
+    }
+
+    /**
+     * init canvas
+     */
+    #initCanvas() {}
+  }
+  customElements.define("astro-canvas", AstroCanvas);
+</script>
