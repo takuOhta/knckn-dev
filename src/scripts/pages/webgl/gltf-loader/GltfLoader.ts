@@ -15,7 +15,7 @@ import fragmentShader from "./shaders/shader.frag";
 import { globalMouseMove } from "@scripts/events/GlobalMouseEventHandler";
 
 const GLTF_PATH = "/assets/models/red-spider-lily/";
-const GLTF_NAME = "red-spider-lily.gltf";
+const GLTF_NAME = "red-spider-lily_particles.gltf";
 const GLTF_MESH_NAME = "PL-QS1310-1all-3";
 const TEXTURE_PATH = "/assets/models/red-spider-lily/textures/PL-QS1310-1all-3.jpg";
 /**
@@ -88,6 +88,7 @@ class GltfLoader extends BaseThreeCanvas {
     mesh.rotateY(66 * toRad);
     mesh.rotateZ(-120 * toRad);
     this.scene.add(mesh);
+    console.log(geometry.attributes.position.array.length);
   }
 
   /**
