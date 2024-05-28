@@ -23,7 +23,6 @@ $font-family-gothic-default: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN',
   'Hiragino Sans', Meiryo, sans-serif;
 /// @group font
 $font-family-gothic-default-safari: "Hiragino Sans","Hiragino Kaku Gothic ProN",sans-serif;
-/// デフォルトの英語フォント
 /// @group font
 $font-family-mincho-default: 'Noto Sans JP', YuMincho, '游明朝', 'Times New Roman',
   'Hiragino Mincho ProN', 'HGS明朝B', 'ＭＳ Ｐ明朝', serif;
@@ -35,7 +34,7 @@ $font-family-gothic-safari: $font-family-gothic-default-safari;
 /// @group font
 $font-family-mincho: $font-family-mincho-default;
 /// @group font
-$font-family-en: 'Montserrat', $font-family-gothic-default;
+$font-family-en: 'Oswald Variable', $font-family-gothic-default;
 
 /// 英字フォント
 /// @group font
@@ -130,9 +129,31 @@ $font-family-en: 'Montserrat', $font-family-gothic-default;
   font-weight: 700;
 }
 
-
 /// 日本語フォントbold
 /// @group font
 @mixin font-ja-mincho {
   font-family: $font-family-mincho;
+}
+
+// 英語フォント
+/// English font configurations
+/// @group font
+@mixin font-en-regular {
+  font-family: $font-family-en;
+  font-weight: 400;
+}
+
+@mixin font-en-medium {
+  font-family: $font-family-en;
+  font-weight: 500;
+}
+
+@mixin font-en-semibold {
+  font-family: $font-family-en;
+  font-weight: 600;
+}
+
+@mixin font-en-bold {
+  font-family: $font-family-en;
+  font-weight: 700;
 }

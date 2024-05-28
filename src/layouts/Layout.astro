@@ -2,27 +2,30 @@
 /**
  * astro
  */
-import { ViewTransitions, fade } from "astro:transitions";
 
 /**
  * constants
  */
-import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_KEYWORD, SITE_DESCRIPTION } from "@constants/site";
-
+import { SITE_URL, SITE_NAME, SITE_KEYWORD, SITE_DESCRIPTION } from '@constants/site'
 /**
  * components
  */
 
 /**
+ * fonts
+ */
+import '@fontsource-variable/oswald'
+
+/**
  * Props
  */
 interface Props {
-  title: string;
-  description: string;
-  keywords: string;
+  title: string
+  description: string
+  keywords: string
 }
 
-const { title, description, keywords } = Astro.props;
+const { title, description, keywords } = Astro.props
 ---
 
 <!doctype html>
@@ -38,14 +41,12 @@ const { title, description, keywords } = Astro.props;
     <meta name="keywords" content={keywords || SITE_KEYWORD} id="head-meta-keywords" />
     <meta property="og:title" content={`${title} | ${SITE_NAME}`} id="head-meta-og-title" />
     <meta property="og:description" content={description} id="head-meta-og-description" />
-
-    <!-- <ViewTransitions /> -->
   </head>
   <body>
     <slot />
     <script>
-      import { SmoothScroll } from "@scripts/SmoothScroll/SmoothScroll";
-      new SmoothScroll();
+      import { SmoothScroll } from '@scripts/SmoothScroll/SmoothScroll'
+      new SmoothScroll()
     </script>
   </body>
 </html>

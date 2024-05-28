@@ -1,3 +1,8 @@
+/**
+ * それぞれのルールについては以下を確認
+ * @see https://eslint.org/docs/latest/rules/
+ * @see https://typescript-eslint.io/rules/
+ */
 module.exports = {
   env: {
     browser: true,
@@ -10,42 +15,49 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
   ],
   plugins: ['astro', '@typescript-eslint'],
+  // ファイルごとにルールを変更・設定する
   overrides: [
     {
+      // .ts .astroファイルのみに適用される設定
+      files: ['*.ts', '*.astro'],
+      parserOptions: {
+        parser: '@typescript-eslint/parser',
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+      rules: {
+        '@typescript-eslint/no-unused-vars': [
+          'error',
+          {
+            args: 'none',
+          },
+        ], // 未使用の変数をエラーとする (ただし、型定義のみしたい場合があるので、引数は無視する)
+        '@typescript-eslint/no-explicit-any': 'warn', // any型を許可しない
+      },
+    },
+    {
+      // .tsファイルのみに適用される設定
       files: ['*.ts'],
       parserOptions: {
         parser: '@typescript-eslint/parser',
         ecmaVersion: 'latest',
         sourceType: 'module',
       },
-    },
-    {
-      files: ['*.vue'],
-      parser: 'vue-eslint-parser',
       rules: {
-        '@typescript-eslint/no-unused-vars': 'warn',
-        'n/no-callback-literal': ['off'],
-        'comma-dangle': ['error', 'always-multiline'],
-        'template-curly-spacing': ['error', 'always'],
-        'vue/script-indent': ['error', 2, {baseIndent: 0}],
+        'no-irregular-whitespace': 'off', // 不規則な空白を許可する
       },
     },
     {
-      // Define the configuration for `.astro` file.
+      // .astroファイルのみに適用される設定
       files: ['*.astro'],
       // Allows Astro components to be parsed.
       parser: 'astro-eslint-parser',
-      // Parse the script in `.astro` as TypeScript by adding the following configuration.
-      // It's the setting you need when using TypeScript.
+      // `.astro`ファイル内のスクリプトをTypeScriptとして解析するための設定を追加
       parserOptions: {
         parser: '@typescript-eslint/parser',
         extraFileExtensions: ['.astro'],
       },
-      rules: {
-        // override/add rules settings here, such as:
-        // "astro/no-set-html-directive": "error"
-      },
+      rules: {},
     },
-    // ...
   ],
 }

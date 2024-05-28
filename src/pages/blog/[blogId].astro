@@ -1,33 +1,33 @@
 ---
 // constants
-import { PAGE } from "@constants/page";
+import { PAGE } from '@constants/page'
 // components
-import Layout from "@layouts/Layout.astro";
-import { Image } from "astro:assets";
+import Layout from '@layouts/Layout.astro'
+
 // apis
-import { getMicroCMSBlogs, getMicroCMSBlogsDetail } from "@scripts/apis/getMicroCMSBlogs.ts";
+import { getMicroCMSBlogs, getMicroCMSBlogsDetail } from '@scripts/apis/getMicroCMSBlogs.ts'
 
 // 詳細記事ページの全パスを取得
 export async function getStaticPaths() {
-  const response = await getMicroCMSBlogs({ fields: ["id"] });
+  const response = await getMicroCMSBlogs({ fields: ['id'] })
   return response.contents.map((content: any) => ({
     params: {
       blogId: content.id,
     },
-  }));
+  }))
 }
 
 //記事の詳細情報を取得
-const { blogId } = Astro.params;
-const blog = await getMicroCMSBlogsDetail(blogId as string);
+const { blogId } = Astro.params
+const blog = await getMicroCMSBlogsDetail(blogId as string)
 
 // variables
-const PAGE_ID = PAGE.BLOG_DETAIL.ID;
-const PAGE_CLASSNAME = PAGE.BLOG_DETAIL.CLASSNAME;
+const PAGE_ID = PAGE.BLOG_DETAIL.ID
+const PAGE_CLASSNAME = PAGE.BLOG_DETAIL.CLASSNAME
 ---
 
 <Layout title="Welcome to Astro." description="" keywords="">
-  <main class={`p-${PAGE_CLASSNAME}`}>
+  <main class={`p-${PAGE_CLASSNAME}`} data-page-id={PAGE_ID}>
     <section class={`p-${PAGE_CLASSNAME}-inner`}>
       <h1 class="title">{blog.title}</h1>
       <p class="publishedAt">公開日時：{blog.publishedAt}</p>
@@ -37,7 +37,7 @@ const PAGE_CLASSNAME = PAGE.BLOG_DETAIL.CLASSNAME;
 </Layout>
 
 <style lang="scss" is:global>
-  $PAGE_CLASSNAME: "blog-detail";
+  $PAGE_CLASSNAME: 'blog-detail';
   .p-#{$PAGE_CLASSNAME} {
   }
 

@@ -2,17 +2,16 @@
 /**
  * astro
  */
-import { Image } from "astro:assets";
 
 /**
  * constants
  */
-import { PAGE } from "@constants/page";
+import { PAGE } from '@constants/page'
 
 /**
  * layouts
  */
-import Layout from "@layouts/Layout.astro";
+import Layout from '@layouts/Layout.astro'
 
 /**
  * components
@@ -21,19 +20,18 @@ import Layout from "@layouts/Layout.astro";
 /**
  * variables
  */
-const PAGE_ID = PAGE.INDEX.ID;
-const PAGE_CLASSNAME = PAGE.INDEX.CLASSNAME;
-const SITE_NAME = import.meta.env.PUBLIC_SITE_NAME ? import.meta.env.PUBLIC_SITE_NAME : "環境変数が設定されていません";
+const PAGE_ID = PAGE.INDEX.ID
+const PAGE_CLASSNAME = PAGE.INDEX.CLASSNAME
 ---
 
 <Layout title="Welcome to Astro." description="" keywords="">
-  <main class={`p-${PAGE_CLASSNAME}`}>
+  <main class={`p-${PAGE_CLASSNAME}`} data-page-id={PAGE_ID}>
     <section class="dummy"></section>
   </main>
 </Layout>
 
 <style lang="scss" is:global>
-  $PAGE_CLASSNAME: "index";
+  $PAGE_CLASSNAME: 'index';
   .p-#{$PAGE_CLASSNAME} {
   }
 

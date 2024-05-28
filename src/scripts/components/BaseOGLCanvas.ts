@@ -1,33 +1,31 @@
-import { CANVAS_CONFIG } from "@constants/canvas";
-import { Renderer, Camera, Transform, AxesHelper } from "ogl";
-import { ScreenUtil } from "@utils/ScreenUtil";
-import { animationFrame } from "@scripts/events/AnimationFrameHandler";
-import { globalResize } from "@scripts/events/GlobalEventHandler";
-import type { OGLRenderingContext } from "ogl";
-import { smoothScroll } from "@scripts/SmoothScroll/SmoothScroll";
-import { gsapK } from "@utils/AutoKillGSAP";
+import { CANVAS_CONFIG } from '@constants/canvas'
+import { Renderer, Camera, Transform, AxesHelper } from 'ogl'
+import { ScreenUtil } from '@utils/ScreenUtil'
+import { animationFrame } from '@scripts/events/AnimationFrameHandler'
+import { globalResize } from '@scripts/events/GlobalEventHandler'
+import type { OGLRenderingContext } from 'ogl'
 /**
  * WEBGL Canvas の基底クラス
  */
 class BaseOGLCanvas {
-  #containerElement: HTMLElement;
-  #gl: OGLRenderingContext;
-  #renderer: Renderer;
-  #scene: Transform;
-  #axesHelper: AxesHelper;
-  #boundOnResize: () => void;
-  #boundOnRender: ({ time }: { time: number }) => void;
-  #boundOnScroll: () => void;
-  protected _camera: Camera;
+  #containerElement: HTMLElement
+  #gl: OGLRenderingContext
+  #renderer: Renderer
+  #scene: Transform
+  #axesHelper: AxesHelper
+  #boundOnResize: () => void
+  #boundOnRender: ({ time }: { time: number }) => void
+  #boundOnScroll: () => void
+  protected _camera: Camera
   constructor({ element }: { element: HTMLElement }) {
-    this.#containerElement = element;
+    this.#containerElement = element
     this.#renderer = new Renderer({
       width: ScreenUtil.width,
       height: ScreenUtil.height,
       dpr: 2,
       alpha: true,
-    });
-    this.#gl = this.#renderer.gl;
+    })
+    this.#gl = this.#renderer.gl
     /**
      * @task DOMとmeshの位置合わせ
      */
@@ -36,19 +34,19 @@ class BaseOGLCanvas {
       aspect: ScreenUtil.aspect,
       near: 1,
       far: 100000,
-    });
-    this.#scene = new Transform();
+    })
+    this.#scene = new Transform()
 
-    this.#axesHelper = new AxesHelper(this.#gl, {});
-    this.#axesHelper.setParent(this.#scene);
+    this.#axesHelper = new AxesHelper(this.#gl, {})
+    this.#axesHelper.setParent(this.#scene)
 
-    this.#boundOnResize = this._onResize.bind(this);
-    this.#boundOnRender = this.render.bind(this);
-    this.#boundOnScroll = this._onScroll.bind(this);
+    this.#boundOnResize = this._onResize.bind(this)
+    this.#boundOnRender = this.render.bind(this)
+    this.#boundOnScroll = this._onScroll.bind(this)
 
-    this.#initCamera();
-    this.#initRenderer();
-    this._addEventListener();
+    this.#initCamera()
+    this.#initRenderer()
+    this._addEventListener()
   }
 
   /**
@@ -56,7 +54,7 @@ class BaseOGLCanvas {
    * @returns {number}
    */
   get width() {
-    return ScreenUtil.width;
+    return ScreenUtil.width
   }
 
   /**
@@ -64,7 +62,7 @@ class BaseOGLCanvas {
    * @returns {number}
    */
   get height() {
-    return ScreenUtil.height;
+    return ScreenUtil.height
   }
 
   /**
@@ -72,7 +70,7 @@ class BaseOGLCanvas {
    * @returns {number}
    */
   get aspect() {
-    return ScreenUtil.aspect;
+    return ScreenUtil.aspect
   }
 
   /**
@@ -80,21 +78,21 @@ class BaseOGLCanvas {
    * @returns {number}
    */
   get dpr() {
-    return Math.min(ScreenUtil.dpr, CANVAS_CONFIG.DPR_MAX);
+    return Math.min(ScreenUtil.dpr, CANVAS_CONFIG.DPR_MAX)
   }
 
   /**
    * gl
    */
   get gl() {
-    return this.#gl;
+    return this.#gl
   }
 
   /**
    * scene
    */
   get scene() {
-    return this.#scene;
+    return this.#scene
   }
 
   /**
@@ -104,18 +102,18 @@ class BaseOGLCanvas {
     /**
      * @task DOMとmeshの位置合わせ
      */
-    const fovRad = (CANVAS_CONFIG.CAMERA_FOV / 2) * (Math.PI / 180);
-    const dist = this.height / 2 / Math.tan(fovRad);
-    this._camera.position.set(0, 0, dist);
-    this._camera.lookAt([0, 0, 0]);
+    const fovRad = (CANVAS_CONFIG.CAMERA_FOV / 2) * (Math.PI / 180)
+    const dist = this.height / 2 / Math.tan(fovRad)
+    this._camera.position.set(0, 0, dist)
+    this._camera.lookAt([0, 0, 0])
   }
 
   /**
    * レンダー初期化
    */
   #initRenderer() {
-    this.#containerElement.appendChild(this.#gl.canvas as HTMLCanvasElement);
-    this.#gl.clearColor(1, 1, 1, 0);
+    this.#containerElement.appendChild(this.#gl.canvas as HTMLCanvasElement)
+    this.#gl.clearColor(1, 1, 1, 0)
   }
 
   /**
@@ -128,8 +126,8 @@ class BaseOGLCanvas {
    * @param {number} param0.time 経過秒数
    */
   render({ time }: { time: number }) {
-    this.#renderer.render({ scene: this.#scene, camera: this._camera });
-    this._update();
+    this.#renderer.render({ scene: this.#scene, camera: this._camera })
+    this._update()
   }
 
   /**
@@ -141,18 +139,18 @@ class BaseOGLCanvas {
    * リサイズ
    */
   protected _onResize() {
-    this.#renderer.setSize(window.innerWidth, window.innerHeight);
+    this.#renderer.setSize(window.innerWidth, window.innerHeight)
     this._camera.perspective({
       aspect: this.#gl.canvas.width / this.#gl.canvas.height,
-    });
+    })
   }
 
   /**
    * イベントリスナー登録
    */
   protected _addEventListener() {
-    globalResize.add(this.#boundOnResize);
-    animationFrame.add(this.#boundOnRender);
+    globalResize.add(this.#boundOnResize)
+    animationFrame.add(this.#boundOnRender)
     // スクロールイベント
     // smoothScroll.addOnScroll(this.#boundOnScroll);
   }
@@ -161,9 +159,9 @@ class BaseOGLCanvas {
    * イベントリスナー削除
    */
   #removeEventListener() {
-    globalResize.remove(this.#boundOnResize);
-    animationFrame.remove(this.#boundOnRender);
+    globalResize.remove(this.#boundOnResize)
+    animationFrame.remove(this.#boundOnRender)
   }
 }
 
-export { BaseOGLCanvas };
+export { BaseOGLCanvas }

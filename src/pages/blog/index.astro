@@ -1,20 +1,19 @@
 ---
 // constants
-import { PAGE } from "@constants/page";
+import { PAGE } from '@constants/page'
 // components
-import Layout from "@layouts/Layout.astro";
-import { Image } from "astro:assets";
+import Layout from '@layouts/Layout.astro'
 // apis
-import { getMicroCMSBlogs } from "@scripts/apis/getMicroCMSBlogs.ts";
-const response = await getMicroCMSBlogs({ fields: ["id", "title"] });
-const listBlog = response.contents;
+import { getMicroCMSBlogs } from '@scripts/apis/getMicroCMSBlogs.ts'
+const response = await getMicroCMSBlogs({ fields: ['id', 'title'] })
+const listBlog = response.contents
 // variables
-const PAGE_ID = PAGE.BLOG.ID;
-const PAGE_CLASSNAME = PAGE.BLOG.CLASSNAME;
+const PAGE_ID = PAGE.BLOG.ID
+const PAGE_CLASSNAME = PAGE.BLOG.CLASSNAME
 ---
 
 <Layout title="Welcome to Astro." description="" keywords="">
-  <main class={`p-${PAGE_CLASSNAME}`}>
+  <main class={`p-${PAGE_CLASSNAME}`} data-page-id={PAGE_ID}>
     <section class={`p-${PAGE_CLASSNAME}-list`}>
       <ul class="list">
         {
@@ -32,7 +31,7 @@ const PAGE_CLASSNAME = PAGE.BLOG.CLASSNAME;
 </Layout>
 
 <style lang="scss" is:global>
-  $PAGE_CLASSNAME: "blog";
+  $PAGE_CLASSNAME: 'blog';
   .p-#{$PAGE_CLASSNAME} {
   }
 

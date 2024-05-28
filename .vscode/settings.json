@@ -2,25 +2,29 @@
   "search.useGlobalIgnoreFiles": false,
   "search.useIgnoreFiles": false,
   "search.useParentIgnoreFiles": false,
-  "html.format.enable": false,  // アストロ用にHTMLのフォーマッターを無効化(https://code.visualstudio.com/docs/editor/codebasics#_formatting)
+  // アストロ用にHTMLのフォーマッターを無効化(https://code.visualstudio.com/docs/editor/codebasics#_formatting)
+  "html.format.enable": false,
+  // ファイル保存時に自動フォーマット
   "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
+  "editor.formatOnPaste": false,
   // eslintの設定
   "editor.codeActionsOnSave": {
     "source.fixAll": "never",
     "source.fixAll.eslint": "explicit"
   },
-  "eslint.lintTask.options": "../.eslintrc.js",
-  "eslint.validate": [
-    "javascript",
-    "astro",
-    "typescript",
-    "vue",
-  ],
-  //stylelintの設定
-  "stylelint.validate": [
-    "html",
-    "vue",
-    "astro",
-  ],
+  "eslint.lintTask.options": "./.eslintrc.cjs",
+  "prettier.ignorePath": "./.prettierignore",
+  "prettier.configPath": "./.prettierrc.cjs",
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
