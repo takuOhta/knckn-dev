@@ -1,56 +1,180 @@
+@use "sass:meta";
 @use '/src/styles/global/abstracts/media-query' as a-media;
 @use '/src/styles/global/abstracts/mixin/easing' as a-ease;
+@use '/src/styles/global/config/color' as c-color;
 
 //
 // hover motion
 //
+// motionの追加の仕方
+// ①"hover-scale"mixinなどのモーションのスタイルが記述されているmixinをコピぺ
+// ②①でコピぺしたmixin内のスタイル記述を変更
+// ③"getTransitionProperties"function内で指定したいモーションのtransitionプロパティを設定
+// ④"hover"mixin内で呼び出しの記述を追加（@if $property == 'scale'.. で始まる１文をコピペ）
+// ※注意点："hover mixin"と"transition mixin"で使用する呼び出し用のkeyは関数名と一致させてください。
+//  例："hover-scale mixin"の場合はkeyは"scale"となります。
 
-/// @group motion
-@mixin hover-opacity() {
-  @include a-ease.easing-out(0.6);
-  &:hover {
-    @include a-media.media-pc {
-      opacity: 0.3;
-    }
+
+/// @group transition
+/// @param {Lists} $properties - transitionを設定するアニメーションのリスト
+/// hover.scssファイルの外部から呼び出すtransition
+@mixin transition($properties: (), $args...) {
+  $option: meta.keywords($args);
+  $child: if(map-get($option, 'child'), map-get($option, 'child'), null);
+  @include a-media.media-pc {
+    @include base-transition($properties, $child: $child);
   }
 }
 
-@mixin hover-scale() {
-  overflow: hidden;
-  transform: rotate(0.000001deg);
-
-  > * {
-    @include a-ease.easing-out(0.6);
-    &:hover {
-      @include a-media.media-pc {
-        scale: 1.05;
+/// @group transition
+/// @param {Lists} $properties - transitionを設定するアニメーションのリスト
+/// hover.scssファイル内の"hover-〇〇 mixin"から呼び出す場合のトランジション
+@mixin base-transition($properties: (), $args...) {
+  $option: meta.keywords($args);
+  $child: if(map-get($option, 'child'), map-get($option, 'child'), null);
+  $target: if(map-get($option, 'target'), ':hover', '.-isHover');
+  $transiton-in: map-get(
+    getTransitionProperties($properties),
+    in
+  ); // トランジションイン用のプロパティの値
+  $transiton-out: map-get(
+    getTransitionProperties($properties),
+    out
+  ); // トランジションアウト用のプロパティの値
+  @if $child != null {
+    #{$child} {
+      transition: #{$transiton-out};
+    }
+    &#{$target} {
+      #{$child} {
+        transition: #{$transiton-in};
       }
     }
+  } @else {
+    transition: #{$transiton-out};
+    &#{$target} {
+      transition: #{$transiton-in};
+    }
   }
 }
 
-@mixin hover-image-scale() {
-  overflow: hidden;
-  transform: rotate(0.000001deg);
+/// @group transition
+/// @param {Lists} $properties - transitionを設定するアニメーションのリスト
+///　モーションごとのtransition設定を取得する関数
+@function getTransitionProperties($properties: ()) {
+  $transiton-in: ''; // トランジションイン用のプロパティの値
+  $transiton-out: ''; // トランジションアウト用のプロパティの値
+  // 指定されたhoverモーションの数だけtransitionの設定をしないといけないので@eachで回す。
+  @each $property in $properties {
+    // @animationの場合はトランジションを設定しない
+    @if $property == 'iconHorizontal' or $property == 'iconVertical' {
+      $transiton-in: $transiton-in;
+      $transiton-out: $transiton-out;
+    }@else {
+      // トランジションの連結用のカンマ追加
+      @if $transiton-in != '' {
+        $transiton-in: $transiton-in + ', ';
+      }
+      @if $transiton-out != '' {
+        $transiton-out: $transiton-out + ', ';
+      }
+    }
 
-  .image {
-    > * {
-      @include a-ease.easing-out(0.6);
+    // スケールのトランジション
+    @if $property == 'scale' {
+      $transiton-in: $transiton-in + 'transform 0.15s #{a-ease.$ease}';
+      $transiton-out: $transiton-out + 'transform 0.2s #{a-ease.$ease-inout}';
+    }
+    // カラーのトランジション
+    @if $property == 'color' {
+      $transiton-in: $transiton-in + 'color 0.1s #{a-ease.$ease}';
+      $transiton-out: $transiton-out + 'color 0.15s #{a-ease.$ease-inout}';
+    }
+    // all
+    @if $property == 'all' {
+      $transiton-in: $transiton-in + 'all 0.1s #{a-ease.$ease}';
+      $transiton-out: $transiton-out + 'all 0.15s #{a-ease.$ease-inout}';
     }
   }
+  @return (in: $transiton-in, out: $transiton-out);
+}
 
-  &:hover {
-    .image {
-      > * {
-        @include a-media.media-pc {
-          scale: 1.05;
+/// @group motion
+/// スケール（トランスフォームで拡大）
+@mixin hover-scale($args...) {
+  $option: meta.keywords($args);
+  $child: if(map-get($option, 'child'), map-get($option, 'child'), null);
+  $value: if(map-get($option, 'value'), map-get($option, 'value'), 1.1);
+  $target: if(map-get($option, 'target'), ':hover', '.-isHover');
+  @if $child != null {
+    &#{$target} {
+      #{$child} {
+        transform: scale($value);
+      }
+    }
+  } @else {
+    &#{$target} {
+      transform: scale($value);
+    }
+  }
+}
+
+/// @group motion
+/// カラー変更
+@mixin hover-color($args...) {
+  $option: meta.keywords($args);
+  $child: if(map-get($option, 'child'), map-get($option, 'child'), null);
+  $target: if(map-get($option, 'target'), ':hover', '.-isHover');
+  $value: if(
+    map-get($option, 'value'),
+    map-get($option, 'value'),
+    c-color.$color-primary
+  );
+  $target: if(map-get($option, 'target'), ':hover', '.-isHover');
+  @if $child != null {
+    &#{$target} {
+      #{$child} {
+        color: $value;
+      }
+    }
+  } @else {
+    &#{$target} {
+      color: $value;
+    }
+  }
+}
+
+/// @group motion
+@mixin hover($properties: null, $options: null) {
+  @each $property in $properties {
+    $c: null;
+    $v: null;
+    $t: null;
+    @if $options != null {
+      @each $key, $option in $options {
+        @if $key == $property {
+          $c: if(map-get($option, 'child'), map-get($option, 'child'), null);
+          $v: if(map-get($option, 'value'), map-get($option, 'value'), null);
+          $t: if(map-get($option, 'hovertrigger'), map-get($option, 'hovertrigger'), null);
         }
       }
     }
-  }
-}
 
-/// @group motion
-@mixin hover-colorChange-ease() {
-  @include a-ease.easing-out(0.6);
+    // PCレイアウトにのみスタイルを反映したいモーション
+    @include a-media.media-pc {
+      @if $property == 'color' {
+        @include hover-color($child: $c, $value: $v, $target: $t);
+      }
+      @if $property == 'scale' {
+        @include hover-scale($child: $c, $value: $v, $target: $t);
+      }
+    }
+
+    // transition 設定
+    @if $c != null {
+      @include base-transition($properties, $child: $c);
+    }@else {
+      @include base-transition($properties);
+    }
+  }
 }

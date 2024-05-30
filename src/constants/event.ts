@@ -3,14 +3,22 @@
  * @enum {string}
  */
 export const EVENT_TYPE = {
+  LOAD: 'load',
+  DOMCONTENTLOADED: 'DOMContentLoaded',
   CLICK: 'click',
   DOUBLE_CLICK: 'dblclick',
   MOUSE_DOWN: 'mousedown',
   MOUSE_MOVE: 'mousemove',
+  MOUSE_ENTER: 'mouseenter',
+  MOUSE_LEAVE: 'mouseleave',
+  ANIMATION_START: 'animationstart',
+  ANIMATION_END: 'animationend',
   MOUSE_UP: 'mouseup',
   ORIENTATION_CHANGE: 'orientationchange',
   RESIZE: 'resize',
   SCROLL: 'scroll',
+  FOCUS: 'focus',
+  BLUR: 'blur',
 } as const
 
 /**

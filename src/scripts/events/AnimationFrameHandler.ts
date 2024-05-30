@@ -88,7 +88,7 @@ class AnimationFrameHandler extends GlobalEventHandlerBase {
 
     // 停止中 & ひとつめのコールバック追加を合図にループを再開
     const isStopped = !this.#isRunning
-    const shouldRestart = (this._callbacks.length === 1)
+    const shouldRestart = this._callbacks.length === 1
     if (isStopped && shouldRestart) {
       this.#isRunning = true
       this.#isResumeFrame = true
@@ -106,7 +106,7 @@ class AnimationFrameHandler extends GlobalEventHandlerBase {
       return
     }
 
-    const shouldStop = (this._callbacks.length === 0)
+    const shouldStop = this._callbacks.length === 0
     if (this.#isRunning && shouldStop) {
       gsap.ticker.remove(this.#boundOnAnimationFrame)
       this.#isRunning = false
@@ -183,11 +183,11 @@ class AnimationFrameHandlerWithStats extends AnimationFrameHandler {
    * @param elapsed
    */
   protected override _onAnimationFrame(time: number, deltaTime: number, frame: number, elapsed: number): void {
-    this.#stats.begin()// パフォーマンス計測開始
+    this.#stats.begin() // パフォーマンス計測開始
 
     super._onAnimationFrame(time, deltaTime, frame, elapsed)
 
-    this.#stats.end()// パフォーマンス計測終了
+    this.#stats.end() // パフォーマンス計測終了
   }
 }
 

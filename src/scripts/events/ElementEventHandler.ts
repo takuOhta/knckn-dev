@@ -1,24 +1,27 @@
-import { CALLBACK_TIMING, EVENT_TYPE, PASSIVE } from '@constants/event'
-import { GlobalEventHandlerBase } from '@scripts/events/GlobalEventHandlerBase'
-import { type CallbackTiming, type EventType, type GlobalEventCallback } from '@tsTypes/event'
+import { CALLBACK_TIMING, PASSIVE } from '@constants/event'
+import { ElementEventHandlerBase } from '@scripts/events/ElementEventHandlerBase'
+import { type CallbackTiming, type EventType, type ElementEventCallback } from '@tsTypes/event'
 import { debounce, throttle } from '@utils/event'
 
 /**
  * window の任意のイベントにコールバックを紐づけて発火させるクラス。<br>
  * 登録されているコールバックの数をみて自動的に一時停止/再開する。
  */
-export class GlobalEventHandler extends GlobalEventHandlerBase {
+export class ElementEventHandler extends ElementEventHandlerBase {
+  _element: HTMLElement
   #eventType: EventType
-  #boundOnEvent: GlobalEventCallback
+  #boundOnEvent: ElementEventCallback
 
   /**
+   * @param element イベントを紐づける要素
    * @param eventType イベント種別
    * @param callbackTiming コールバック関数を発火するタイミング
    * @param interval コールバック関数の実行間隔
    */
-  constructor(eventType: EventType, callbackTiming: CallbackTiming = CALLBACK_TIMING.EVERYTIME, interval: number = 0) {
+  constructor(element: HTMLElement, eventType: EventType, callbackTiming: CallbackTiming = CALLBACK_TIMING.EVERYTIME, interval: number = 0) {
     super()
 
+    this._element = element
     this.#eventType = eventType
 
     switch (callbackTiming) {
@@ -38,10 +41,10 @@ export class GlobalEventHandler extends GlobalEventHandlerBase {
    * コールバックを追加
    * @param callback
    */
-  add(callback: GlobalEventCallback): void {
+  add(callback: ElementEventCallback): void {
     this._addCallback(callback)
     if (this._callbacks.length === 1) {
-      window.addEventListener(this.#eventType, this.#boundOnEvent, PASSIVE.TRUE)
+      this._element.addEventListener(this.#eventType, this.#boundOnEvent, PASSIVE.TRUE)
     }
   }
 
@@ -49,13 +52,13 @@ export class GlobalEventHandler extends GlobalEventHandlerBase {
    * イベントに紐づいているコールバックを削除
    * @param callback
    */
-  remove(callback: GlobalEventCallback): void {
+  remove(callback: ElementEventCallback): void {
     const isRemoved = this._removeCallback(callback)
     if (!isRemoved) {
       return
     }
     if (this._callbacks.length === 0) {
-      window.removeEventListener(this.#eventType, this.#boundOnEvent, PASSIVE.TRUE as EventListenerOptions)
+      this._element.removeEventListener(this.#eventType, this.#boundOnEvent, PASSIVE.TRUE as EventListenerOptions)
     }
   }
 
@@ -84,6 +87,3 @@ export class GlobalEventHandler extends GlobalEventHandlerBase {
     this._callback()
   }
 }
-
-export const globalOrientationChange = new GlobalEventHandler(EVENT_TYPE.ORIENTATION_CHANGE)
-export const globalResize = new GlobalEventHandler(EVENT_TYPE.RESIZE)

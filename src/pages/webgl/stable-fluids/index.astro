@@ -10,7 +10,7 @@
 /**
  * layouts
  */
-import Layout from "@layouts/Layout.astro";
+import Layout from '@layouts/Layout.astro'
 
 /**
  * components
@@ -18,7 +18,7 @@ import Layout from "@layouts/Layout.astro";
 /**
  * variables
  */
-const PAGE_CLASSNAME = "webgl";
+const PAGE_CLASSNAME = 'webgl'
 ---
 
 <Layout title="Welcome to Astro." description="" keywords="">
@@ -27,8 +27,8 @@ const PAGE_CLASSNAME = "webgl";
   </main>
 </Layout>
 
-<style lang="scss" is:global>
-  $PAGE_CLASSNAME: "webgl";
+<style lang="scss">
+  $PAGE_CLASSNAME: 'webgl';
   .p-#{$PAGE_CLASSNAME} {
     width: 100%;
     height: 100vh;
@@ -51,16 +51,16 @@ const PAGE_CLASSNAME = "webgl";
   // /**
   // * @description クライアントサイドで実行されるスクリプトはここに記述します。
   // */
-  import { TriangleScreenShaderCanvas } from "@scripts/pages/webgl/triangle-screen-shader/TriangleScreenShaderCanvas";
+  import { TriangleScreenShaderCanvas } from '@scripts/pages/webgl/triangle-screen-shader/TriangleScreenShaderCanvas'
 
   // canvasタグの設定
   class AstroCanvas extends HTMLElement {
-    #rootElement: HTMLElement;
-    #canvas: TriangleScreenShaderCanvas;
+    #rootElement: HTMLElement
+    #canvas: TriangleScreenShaderCanvas
     constructor() {
-      super();
-      this.#rootElement = this;
-      this.#canvas = new TriangleScreenShaderCanvas({ element: this.#rootElement });
+      super()
+      this.#rootElement = this
+      this.#canvas = new TriangleScreenShaderCanvas({ element: this.#rootElement })
     }
 
     /**
@@ -68,5 +68,5 @@ const PAGE_CLASSNAME = "webgl";
      */
     #initCanvas() {}
   }
-  customElements.define("astro-canvas", AstroCanvas);
+  customElements.define('astro-canvas', AstroCanvas)
 </script>

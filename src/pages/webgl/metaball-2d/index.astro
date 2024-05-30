@@ -10,7 +10,7 @@
 /**
  * layouts
  */
-import Layout from "@layouts/Layout.astro";
+import Layout from '@layouts/Layout.astro'
 
 /**
  * components
@@ -18,7 +18,7 @@ import Layout from "@layouts/Layout.astro";
 /**
  * variables
  */
-const PAGE_CLASSNAME = "webgl";
+const PAGE_CLASSNAME = 'webgl'
 ---
 
 <Layout title="2D Meta Ball" description="" keywords="">
@@ -33,9 +33,9 @@ const PAGE_CLASSNAME = "webgl";
   </main>
 </Layout>
 
-<style lang="scss" is:global>
-  @import url("https://fonts.googleapis.com/css2?family=Jost:wght@600&display=swap");
-  $PAGE_CLASSNAME: "webgl";
+<style lang="scss">
+  @import url('https://fonts.googleapis.com/css2?family=Jost:wght@600&display=swap');
+  $PAGE_CLASSNAME: 'webgl';
   .p-#{$PAGE_CLASSNAME} {
     width: 100%;
     height: 100vh;
@@ -60,7 +60,7 @@ const PAGE_CLASSNAME = "webgl";
     color: $color-white;
     mix-blend-mode: difference;
     > span {
-      font-family: "Jost", sans-serif;
+      font-family: 'Jost', sans-serif;
       font-size: 80px;
       font-weight: 600;
       line-height: 1.1;
@@ -73,16 +73,16 @@ const PAGE_CLASSNAME = "webgl";
   // /**
   // * @description クライアントサイドで実行されるスクリプトはここに記述します。
   // */
-  import { MetaballCanvas } from "@scripts/pages/webgl/metaball-2d/MetaballCanvas";
+  import { MetaballCanvas } from '@scripts/pages/webgl/metaball-2d/MetaballCanvas'
 
   // canvasタグの設定
   class AstroCanvas extends HTMLElement {
-    #rootElement: HTMLElement;
-    #canvas: MetaballCanvas;
+    #rootElement: HTMLElement
+    #canvas: MetaballCanvas
     constructor() {
-      super();
-      this.#rootElement = this;
-      this.#canvas = new MetaballCanvas({ element: this.#rootElement });
+      super()
+      this.#rootElement = this
+      this.#canvas = new MetaballCanvas({ element: this.#rootElement })
     }
 
     /**
@@ -90,5 +90,5 @@ const PAGE_CLASSNAME = "webgl";
      */
     #initCanvas() {}
   }
-  customElements.define("astro-canvas", AstroCanvas);
+  customElements.define('astro-canvas', AstroCanvas)
 </script>

@@ -1,10 +1,10 @@
-import { type GlobalEventCallback } from '@tsTypes/event'
+import { type ElementEventCallback } from '@tsTypes/event'
 
 /**
  * イベントに紐づけるコールバックを追加,削除,発火する基底クラス
  */
-export abstract class GlobalEventHandlerBase {
-  protected _callbacks: Array<GlobalEventCallback> = []
+export abstract class ElementEventHandlerBase {
+  protected _callbacks: Array<ElementEventCallback> = []
 
   constructor() {
     this._callbacks = []
@@ -14,7 +14,7 @@ export abstract class GlobalEventHandlerBase {
    * コールバックを追加
    * @param callback
    */
-  protected _addCallback(callback: GlobalEventCallback): void {
+  protected _addCallback(callback: ElementEventCallback): void {
     this._callbacks.push(callback)
   }
 
@@ -23,7 +23,7 @@ export abstract class GlobalEventHandlerBase {
    * @param callback
    * @returns 削除成功したら true, 失敗したら false
    */
-  protected _removeCallback(callback: GlobalEventCallback): boolean {
+  protected _removeCallback(callback: ElementEventCallback): boolean {
     const index = this._callbacks.indexOf(callback)
     const isFound = index > -1
     if (isFound) {
