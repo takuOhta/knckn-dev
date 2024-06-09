@@ -72,7 +72,7 @@ class BaseThreeCanvas {
     this.#boundOnRender = this.render.bind(this)
 
     this._addEventListener()
-    this.addAnimationFrame()
+    this._addAnimationFrame()
 
     const time = performance.now() / 1000
     this.render({ time })
@@ -171,7 +171,8 @@ class BaseThreeCanvas {
   /**
    * canvasサイズ更新
    */
-  updateSize() {
+  #updateSize() {
+    console.log('updateSize')
     const { width, height, clientWidth, clientHeight } = this._canvasElement
 
     if (width !== clientWidth || height !== clientHeight) {
@@ -183,13 +184,21 @@ class BaseThreeCanvas {
   }
 
   /**
+   * update
+   */
+  protected _update({ time }: { time: number }) {
+    // console.log('[BaseThreeCanvas._update]', this)
+    // this.#updateSize()
+  }
+
+  /**
    * レンダリング
    * @param {object} param0
    * @param {number} param0.time 経過秒数
    */
   render({ time }: { time: number }) {
-    // console.log('[BaseThreeCanvas.render]')
-    this.updateSize()
+    // console.log('[BaseThreeCanvas.render]', time)
+    this._update({ time })
     this._renderer.render(this.scene, this._camera)
   }
 
@@ -205,6 +214,7 @@ class BaseThreeCanvas {
    * リサイズ
    */
   protected onResize() {
+    ScreenUtil.resize()
     const fovRad = (this._camera.fov / 2) * (Math.PI / 180)
     const dist = this.height / 2 / Math.tan(fovRad)
     this._camera.aspect = this.aspect
@@ -224,16 +234,16 @@ class BaseThreeCanvas {
   }
 
   /**
-   * addAnimationFrame
+   * _addAnimationFrame
    */
-  addAnimationFrame() {
+  protected _addAnimationFrame() {
     animationFrame.add(this.#boundOnRender)
   }
 
   /**
-   * removeAnimationFrame
+   * _removeAnimationFrame
    */
-  removeAnimationFrame() {
+  protected _removeAnimationFrame() {
     animationFrame.remove(this.#boundOnRender)
   }
 }

@@ -1,5 +1,5 @@
 import { type Vec2 } from '@tsTypes/math'
-
+import { globalResize } from '@scripts/events/GlobalEventHandler'
 /**
  * ウィンドウサイズ取得用の静的クラス
  */
