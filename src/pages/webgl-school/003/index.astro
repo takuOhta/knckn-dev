@@ -1,0 +1,77 @@
+---
+/**
+ * astro
+ */
+
+/**
+ * constants
+ */
+
+/**
+ * layouts
+ */
+import Layout from '@layouts/Layout.astro'
+
+/**
+ * components
+ */
+/**
+ * variables
+ */
+const PAGE_CLASSNAME = 'webgl'
+---
+
+<Layout title="webgl_school_002" description="" keywords="">
+  <main class={`p-${PAGE_CLASSNAME}`}>
+    <astro-canvas class="canvas-wrapper">
+      <canvas></canvas>
+    </astro-canvas>
+  </main>
+</Layout>
+
+<style lang="scss" is:global>
+  @import url('https://fonts.googleapis.com/css2?family=Jost:wght@600&display=swap');
+  $PAGE_CLASSNAME: 'webgl';
+  .p-#{$PAGE_CLASSNAME} {
+    width: 100%;
+    height: 100vh;
+  }
+
+  .canvas-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    > canvas {
+      width: 100%;
+      height: 100%;
+    }
+  }
+</style>
+
+<script>
+  // /**
+  // * @description クライアントサイドで実行されるスクリプトはここに記述します。
+  // */
+  import { FlyingPlane } from '@scripts/pages/webgl-school/003/FlyingPlane.ts'
+
+  // canvasタグの設定
+  class AstroCanvas extends HTMLElement {
+    #rootElement: HTMLElement
+    #canvasElement: HTMLCanvasElement
+    #canvas: FlyingPlane
+    constructor() {
+      super()
+      this.#rootElement = this
+      this.#canvasElement = this.querySelector<HTMLCanvasElement>('canvas')!
+      this.#canvas = new FlyingPlane({ canvasElement: this.#canvasElement })
+    }
+
+    /**
+     * init canvas
+     */
+    #initCanvas() {}
+  }
+  customElements.define('astro-canvas', AstroCanvas)
+</script>
