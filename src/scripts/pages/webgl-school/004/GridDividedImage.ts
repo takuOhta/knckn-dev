@@ -72,6 +72,7 @@ class GridDividedImage extends BaseThreeCanvas {
    */
   async #init() {
     console.log('init')
+    this.#addEventListeners()
     this.group.add(this.#directionalLight)
     this.group.add(this.#ambientLight)
     this.group.add(this.#axesHelper)
@@ -100,6 +101,15 @@ class GridDividedImage extends BaseThreeCanvas {
   override _update({ time }: { time: number }) {
     super._update({ time })
     if (this.imageMeshArr && this.imageMeshArr.length > 0) this.imageMeshArr.forEach((imageMesh) => imageMesh.update({ time }))
+
+    // // // マウスと重なったオブジェクトを取得
+    // if (!this.raycaster) return
+    // this.raycaster.setFromCamera(this.mouse, this._camera)
+    // const intersects = this.raycaster.intersectObjects(this.imageMeshArr)
+    // if (this.imageMeshArr && this.imageMeshArr.length > 0 && intersects.length > 0) {
+    //   console.log('intersects[0]', intersects[0])
+    //   // intersect.material.uniforms.uStopTime.value = time
+    // }
   }
   /**
    * addEventListeners
@@ -112,8 +122,14 @@ class GridDividedImage extends BaseThreeCanvas {
   }
 
   #onMouseMove = (event: MouseEvent) => {
-    this.mouse.x = (event.clientX / this.width) * 2 - 1
-    this.mouse.y = -((event.clientY / this.height) * 2 - 1)
+    this.mouse.x = event.clientX / this.width
+    this.mouse.y = 1 - event.clientY / this.height
+    // マウス位置のオフセット
+    if (this.imageMeshArr && this.imageMeshArr.length > 0) {
+      this.imageMeshArr.forEach((imageMesh, index) => {
+        imageMesh.material.uniforms.uMouseOffset.value = new Vector2(this.mouse.x, this.mouse.y)
+      })
+    }
   }
   #onMouseUp = () => {
     console.log('click')

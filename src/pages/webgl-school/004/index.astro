@@ -28,7 +28,7 @@ const PAGE_CLASSNAME = 'webgl'
       <div class="image-wrap" data-giriddividedimage="container">
         <img src="/assets/images/webgl-school/004/Johannes_Vermeer_(1632-1675)_-_The_Girl_With_The_Pearl_Earring_(1665).jpg" alt="" class="bg" />
         <div class="images">
-          {new Array(100).fill(0).map(() => <div class="image" data-giriddividedimage="image" />)}
+          {new Array(900).fill(0).map(() => <div class="image" data-giriddividedimage="image" />)}
         </div>
       </div>
     </astro-canvas>
@@ -70,8 +70,8 @@ const PAGE_CLASSNAME = 'webgl'
       position: absolute;
       inset: 0;
       display: grid;
-      grid-template-rows: repeat(10, 1fr);
-      grid-template-columns: repeat(10, 1fr);
+      grid-template-rows: repeat(30, 1fr);
+      grid-template-columns: repeat(30, 1fr);
       .image {
         grid-auto-flow: dense;
         width: 100%;

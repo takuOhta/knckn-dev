@@ -36,6 +36,12 @@ class ImageMesh extends Mesh {
         uIndex: {
           value: new Vector2(indexX, indexY),
         },
+        uMouseOffset: {
+          value: new Vector2(0.0, 0.0),
+        },
+        uStopTime: {
+          value: 0.0,
+        },
         uTime: {
           value: 0.0,
         },
