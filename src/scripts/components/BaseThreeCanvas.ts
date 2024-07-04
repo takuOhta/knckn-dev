@@ -14,6 +14,7 @@ import { CANVAS_CONFIG } from '@constants/canvas'
 import { animationFrame } from '@scripts/events/AnimationFrameHandler'
 import { globalResize } from '@scripts/events/GlobalEventHandler'
 import { ScreenUtil } from '@utils/ScreenUtil'
+import { smoothScroll } from '@scripts/SmoothScroll/SmoothScroll'
 /**
  * 共通 WebGL Canvas
  */
@@ -177,8 +178,6 @@ class BaseThreeCanvas {
 
     if (width !== clientWidth || height !== clientHeight) {
       // console.log('canvas resize')
-      // this.#width = document.getElementById('__nuxt') ? document.getElementById('__nuxt')?.clientWidth as number: 0
-      // this.#height = document.getElementById('__nuxt') ? document.getElementById('__nuxt')?.clientHeight as number: 0
       this._renderer.setSize(clientWidth, clientHeight, false)
     }
   }
@@ -189,6 +188,7 @@ class BaseThreeCanvas {
   protected _update({ time }: { time: number }) {
     // console.log('[BaseThreeCanvas._update]', this)
     // this.#updateSize()
+    this.setScrollY(smoothScroll.animatedScroll)
   }
 
   /**
