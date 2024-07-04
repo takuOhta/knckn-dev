@@ -9,7 +9,8 @@ import { Raycaster } from 'three/src/core/Raycaster.js'
 import { globalMouseMove } from '@scripts/events/GlobalMouseEventHandler'
 import { ImageMesh } from '@scripts/pages/webgl-school/004/ImageMesh'
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
-
+import gsap from 'gsap'
+import { Flip } from 'gsap/Flip'
 const texLoader = new TextureLoader()
 /**
  * テクスチャ読み込み
@@ -43,7 +44,9 @@ class GridDividedImage extends BaseThreeCanvas {
   #texture: any
   raycaster: Raycaster = new Raycaster()
   isRaycasting = false
-  mouse = new Vector2()
+  mouse = new Vector2(0, 0)
+  targetMousePoint = new Vector2(0, 0)
+  resetPct: number = 0
   static FAR = 100
   constructor({ element }: { element: HTMLElement }) {
     const canvasElement = element.querySelector<HTMLCanvasElement>('canvas')!
@@ -75,8 +78,8 @@ class GridDividedImage extends BaseThreeCanvas {
     this.#addEventListeners()
     this.group.add(this.#directionalLight)
     this.group.add(this.#ambientLight)
-    this.group.add(this.#axesHelper)
-    this.#texture = await loadTexture('/assets/images/webgl-school/004/Johannes_Vermeer_(1632-1675)_-_The_Girl_With_The_Pearl_Earring_(1665).jpg')
+    // this.group.add(this.#axesHelper)
+    this.#texture = await loadTexture('https://picsum.photos/1920/1080')
     this.#initPlanes()
     this.imageMeshArr.forEach((imageMesh) => this.group.add(imageMesh))
   }
@@ -100,16 +103,26 @@ class GridDividedImage extends BaseThreeCanvas {
    */
   override _update({ time }: { time: number }) {
     super._update({ time })
-    if (this.imageMeshArr && this.imageMeshArr.length > 0) this.imageMeshArr.forEach((imageMesh) => imageMesh.update({ time }))
+    if (!this.imageMeshArr || this.imageMeshArr.length <= 0) return
 
-    // // // マウスと重なったオブジェクトを取得
-    // if (!this.raycaster) return
-    // this.raycaster.setFromCamera(this.mouse, this._camera)
-    // const intersects = this.raycaster.intersectObjects(this.imageMeshArr)
-    // if (this.imageMeshArr && this.imageMeshArr.length > 0 && intersects.length > 0) {
-    //   console.log('intersects[0]', intersects[0])
-    //   // intersect.material.uniforms.uStopTime.value = time
-    // }
+    const subX = this.targetMousePoint.x - this.mouse.x
+    const subY = this.targetMousePoint.y - this.mouse.y
+
+    this.mouse.x += subX * 0.05
+    this.mouse.y += subY * 0.05
+
+    // マウス位置のオフセット
+    this.imageMeshArr.forEach((imageMesh, index) => {
+      imageMesh.material.uniforms.uMouseOffset.value = new Vector2(this.mouse.x, this.mouse.y)
+      imageMesh.material.uniforms.uReset.value = this.resetPct
+    })
+
+    // meshのアップデート
+    this.imageMeshArr.forEach((imageMesh) => imageMesh.update({ time }))
+
+    // リセット値のアップデート
+    if (this.resetPct <= 0.0) return
+    this.resetPct -= 0.005
   }
   /**
    * addEventListeners
@@ -122,13 +135,22 @@ class GridDividedImage extends BaseThreeCanvas {
   }
 
   #onMouseMove = (event: MouseEvent) => {
-    this.mouse.x = event.clientX / this.width
-    this.mouse.y = 1 - event.clientY / this.height
-    // マウス位置のオフセット
-    if (this.imageMeshArr && this.imageMeshArr.length > 0) {
-      this.imageMeshArr.forEach((imageMesh, index) => {
-        imageMesh.material.uniforms.uMouseOffset.value = new Vector2(this.mouse.x, this.mouse.y)
-      })
+    // マウス位置の更新
+    this.targetMousePoint.x = event.clientX / this.width
+    this.targetMousePoint.y = 1.0 - event.clientY / this.height
+
+    // // マウスと重なったオブジェクトを取得
+    if (!this.raycaster) return
+    this.raycaster.setFromCamera(this.mouse, this._camera)
+    const intersects = this.raycaster.intersectObjects(this.scene.children)
+    if (intersects.length > 0) {
+      // リセット値の更新
+      if (this.resetPct < 1.0) {
+        this.resetPct += 0.02
+      }
+
+      // console.log('intersects[0]', intersects[0])
+      // intersects[0].material.uniforms.uStopTime.value = time
     }
   }
   #onMouseUp = () => {

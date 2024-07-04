@@ -39,7 +39,7 @@ class ImageMesh extends Mesh {
         uMouseOffset: {
           value: new Vector2(0.0, 0.0),
         },
-        uStopTime: {
+        uReset: {
           value: 0.0,
         },
         uTime: {
