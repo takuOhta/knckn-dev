@@ -9,8 +9,8 @@ import { Raycaster } from 'three/src/core/Raycaster.js'
 import { globalMouseMove } from '@scripts/events/GlobalMouseEventHandler'
 import { ImageMesh } from '@scripts/pages/webgl-school/004/ImageMesh'
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
-import gsap from 'gsap'
-import { Flip } from 'gsap/Flip'
+import { gsapK } from '@utils/AutoKillGSAP'
+import { gsap } from 'gsap'
 const texLoader = new TextureLoader()
 /**
  * テクスチャ読み込み
@@ -41,6 +41,7 @@ class GridDividedImage extends BaseThreeCanvas {
   #ambientLight: AmbientLight
   #axesHelper: AxesHelper
   imageMeshArr: Array<ImageMesh> = []
+  activeMesh: ImageMesh | undefined
   #texture: any
   raycaster: Raycaster = new Raycaster()
   isRaycasting = false
@@ -48,6 +49,7 @@ class GridDividedImage extends BaseThreeCanvas {
   targetMousePoint = new Vector2(0, 0)
   resetPct: number = 0
   static FAR = 100
+  time: number = 0
   constructor({ element }: { element: HTMLElement }) {
     const canvasElement = element.querySelector<HTMLCanvasElement>('canvas')!
     super({ canvasElement, orbitControls: false })
@@ -103,6 +105,7 @@ class GridDividedImage extends BaseThreeCanvas {
    */
   override _update({ time }: { time: number }) {
     super._update({ time })
+    this.time = time
     if (!this.imageMeshArr || this.imageMeshArr.length <= 0) return
 
     const subX = this.targetMousePoint.x - this.mouse.x
@@ -111,14 +114,15 @@ class GridDividedImage extends BaseThreeCanvas {
     this.mouse.x += subX * 0.05
     this.mouse.y += subY * 0.05
 
-    // マウス位置のオフセット
+    // // マウス位置のオフセット
     this.imageMeshArr.forEach((imageMesh, index) => {
       imageMesh.material.uniforms.uMouseOffset.value = new Vector2(this.mouse.x, this.mouse.y)
       imageMesh.material.uniforms.uReset.value = this.resetPct
+      const width = this.#imageElementArr[index].getBoundingClientRect().width
+      const height = this.#imageElementArr[index].clientHeight
+      imageMesh.setSize(width, height)
+      imageMesh.update({ time })
     })
-
-    // meshのアップデート
-    this.imageMeshArr.forEach((imageMesh) => imageMesh.update({ time }))
 
     // リセット値のアップデート
     if (this.resetPct <= 0.0) return
@@ -139,22 +143,55 @@ class GridDividedImage extends BaseThreeCanvas {
     this.targetMousePoint.x = event.clientX / this.width
     this.targetMousePoint.y = 1.0 - event.clientY / this.height
 
+    const mouseX = (event.clientX / this.width) * 2 - 1
+    const mouseY = -((event.clientY / this.height) * 2 - 1)
+
     // // マウスと重なったオブジェクトを取得
     if (!this.raycaster) return
-    this.raycaster.setFromCamera(this.mouse, this._camera)
+    this.isRaycasting = false
+    this.raycaster.setFromCamera(new Vector2(mouseX, mouseY), this._camera)
     const intersects = this.raycaster.intersectObjects(this.scene.children)
     if (intersects.length > 0) {
+      this.isRaycasting = true
       // リセット値の更新
       if (this.resetPct < 1.0) {
         this.resetPct += 0.02
       }
-
       // console.log('intersects[0]', intersects[0])
-      // intersects[0].material.uniforms.uStopTime.value = time
+      intersects[0].object.material.uniforms.uStopTime.value = this.time
     }
   }
   #onMouseUp = () => {
     console.log('click')
+
+    // raycastingでオブジェクトが選択されている場合
+    if (this.isRaycasting) {
+      this.activeMesh = this.raycaster.intersectObjects(this.scene.children)[0].object as ImageMesh
+      if (this.activeMesh.material.uniforms.uIsSelected.value == true) return
+      const index = this.activeMesh.index
+      this.activeMesh.material.uniforms.uIsSelected.value = true
+      this.openModal()
+    }
+  }
+  /**
+   * show
+   */
+  openModal() {
+    if (this.activeMesh == undefined) return
+    const index = this.activeMesh.index
+    const imgElem = this.#imageElementArr[index]
+    const scale = 1.6 + Math.random() * 2.0
+    const screenWidth = imgElem.getBoundingClientRect().width * scale
+    const screenHeight = imgElem.offsetHeight * scale
+    gsap.set(imgElem, {
+      top: '50%',
+      left: '50%',
+      xPercent: -50,
+      yPercent: -50,
+      zIndex: 10,
+      width: screenWidth,
+      height: screenHeight,
+    })
   }
 
   /**

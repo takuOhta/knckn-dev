@@ -9,6 +9,9 @@ uniform vec2 uIndex;
 uniform float uDivisionNum;
 uniform vec2 uMouseOffset;
 uniform float uReset;
+uniform bool uIsSelected;
+uniform float uStopTime;
+
 float rand(vec2 n) {
   return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
 }
@@ -42,12 +45,13 @@ void main() {
   }
 
   // add mouse offset
-  uv.x *= 1. + (noise(vec2(uMouseOffset.x + uIndex.y, uv.x)) - 0.5) * 2.0 * 0.05 * uReset;
-  uv.y *= 1. + (noise(vec2(uMouseOffset.y + uIndex.x, uv.y)) - 0.5) * 2.0 * 0.05 * uReset;
-  uv.x += noise(vec2(uMouseOffset.x + uIndex.x, uv.x)) * 0.15 * uReset;
-  uv.y += noise(vec2(uMouseOffset.y + uIndex.y, uv.y)) * 0.15 * uReset;
+  uv.x *= 1. + (noise(vec2(uMouseOffset.x + uIndex.y, uv.x)) - 0.5) * 2.0 * 0.012 * uReset;
+  uv.y *= 1. + (noise(vec2(uMouseOffset.y + uIndex.x, uv.y)) - 0.5) * 2.0 * 0.013 * uReset;
+  uv.x += noise(vec2(uMouseOffset.x + uIndex.x, uv.x)) * 0.05 * uReset;
+  uv.y += noise(vec2(uMouseOffset.y + uIndex.y, uv.y)) * 0.05 * uReset;
 
   vec4 color = texture2D(uTexture, uv.xy);
+  // vec4 color = vec4(vUv.st, uIsSelected ? 1.0: 0.0, 1.0);
   gl_FragColor.rgb = color.rgb;
-  gl_FragColor.a = 1.0;
+  gl_FragColor.a = smoothstep(8.0, 0.0, uTime - uStopTime);
 }

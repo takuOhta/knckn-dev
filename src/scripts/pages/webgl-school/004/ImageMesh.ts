@@ -6,11 +6,13 @@ import { Mesh } from 'three/src/objects/Mesh.js'
 
 import vertexShader from './shaders/imageMesh.vert'
 import fragmentShader from './shaders/imageMesh.frag'
+import { globalResize } from '@scripts/events/GlobalEventHandler'
 
 /**
  * WebGL平面メッシュ
  */
 class ImageMesh extends Mesh {
+  index: number
   /**
    * @param {object} param0
    * @param {number} param0.width
@@ -45,11 +47,19 @@ class ImageMesh extends Mesh {
         uTime: {
           value: 0.0,
         },
+        uStopTime: {
+          value: -8.0,
+        },
+        uIsSelected: {
+          value: false,
+        },
       },
       vertexShader,
       fragmentShader,
     })
     super(geometry, material)
+    this.index = index
+    this.#addEventListener()
     this.setSize(width, height)
   }
   /**
@@ -74,9 +84,16 @@ class ImageMesh extends Mesh {
   /**
    * リサイズ
    */
-  resize(width: number, height: number) {
+  onResize(width: number, height: number) {
     this.setSize(width, height)
     // this.material.uniforms.uScreenSize.value.copy(ScreenUtil.size)
+  }
+  /**
+   * addEventlistener
+   */
+  #addEventListener() {
+    const boundOnResize = this.onResize.bind(this)
+    globalResize.add(boundOnResize)
   }
 }
 
