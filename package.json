@@ -25,7 +25,7 @@
     "@astrojs/vue": "^3.0.4",
     "@fontsource-variable/oswald": "^5.0.20",
     "@studio-freight/lenis": "^1.0.27",
-    "astro": "^3.0.8",
+    "astro": "^5.17.1",
     "gsap": "^3.12.2",
     "lil-gui": "^0.19.1",
     "microcms-js-sdk": "^2.7.0",
@@ -60,7 +60,7 @@
     "vite-plugin-glsl": "^1.2.1"
   },
   "volta": {
-    "node": "20.10.0",
+    "node": "24.13.0",
     "yarn": "1.22.11"
   }
 }
